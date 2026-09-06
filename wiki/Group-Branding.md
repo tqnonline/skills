@@ -2,7 +2,7 @@
 
 Branding applies one verbal, visual, accessible, physical, and motion system across product UI, documents, print, environments, and video.
 
-Promoted skills: 9.
+Promoted skills: 10.
 
 Full documentation: https://tqnonline.github.io/skills/group/branding/
 

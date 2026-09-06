@@ -87,6 +87,7 @@
 - [press](https://tqnonline.github.io/skills/press/): Renders an approved markdown document to a branded, self-contained HTML page and a PDF.
 - [branding-system](https://tqnonline.github.io/skills/branding-system/): Common engine for applying a validated theme profile as one coherent verbal, visual, accessibility, physical, and motion system.
 - [exhibit](https://tqnonline.github.io/skills/exhibit/): Builds one self-contained, interactive HTML page that walks a reader through a topic as a journey, in a selected theme's colors, type, and motion.
+- [atlas-azure](https://tqnonline.github.io/skills/atlas-azure/): Builds an evidence-grounded Azure reference architecture from a repository or plan, with numbered official-icon SVG diagrams and a branded PDF.
 
 ### Writing
 
