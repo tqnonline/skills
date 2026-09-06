@@ -26,12 +26,13 @@ contract:
 ## Procedure
 
 1. Open `models.md`
-2. Match **role** + **task shape** to a tier row
+2. Match **role** + **task shape** to a tier row. All frontend design, implementation, and UI/UX work uses the `ui` tier before generic worker selection, including small fixes. Split mixed frontend/backend assignments.
 3. Map tier to host-specific ID in the active adapter (OpenCode, Copilot, Cursor)
 4. Return: tier, rationale, adapter key — not raw secrets
 
 ## Stop conditions
 
+- Preferred `ui` model unavailable → report the reason and request the registry's explicit UI backup, with its independent verifier. If either is unavailable, stop for a handoff; do not silently substitute a generic worker or automatic model selection
 - Role unknown → default to `worker-fast` with explicit assumption logged
 - Regulated overlay active → no downgrade past verifier separation
 

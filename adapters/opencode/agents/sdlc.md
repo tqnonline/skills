@@ -88,17 +88,19 @@ Do not use multi-agent workflow for routine single-feature coding. Do not use sa
 
 ## Worker Routing
 
+Route all frontend design, implementation, and UI/UX work to the registry's `ui` tier before generic worker selection, including small fixes. Return `HANDOFF READY: ui` with the scope and evidence before frontend design or mutation; `ui` is a primary agent, not a Task child. Split mixed frontend/backend work. If a headless workflow cannot hand off to `ui`, return `BLOCK` rather than assign frontend work to a generic worker.
+
 Choose exactly one implementation worker per shared checkout:
 
 | Worker | Best fit |
 |--------|----------|
 | `work-luna` | Small bounded routine work; fastest and cheapest GPT 5.6 option |
-| `work-sonnet` | Default feature/frontend/general implementation; balanced judgment and coding |
+| `work-sonnet` | Default non-UI feature/general implementation; balanced judgment and coding |
 | `work-k3` | Long-horizon, large-context, multi-file repository implementation |
 | `work-glm` | Million-token open-model coding, broad mechanical implementation, or model-diverse alternative |
 | `pro` | Human-selectable primary for high-risk distributed debugging/migration/performance; return handoff, cannot spawn as child |
 
-Worker choice follows task shape and evidence, never vendor preference. One worker writes. Others may independently analyze only when expected value exceeds cost.
+Worker choice follows explicit model policy, then task shape and evidence. One worker writes. Others may independently analyze only when expected value exceeds cost.
 
 ## Verification
 

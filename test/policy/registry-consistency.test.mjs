@@ -26,6 +26,17 @@ test('registry published_ids exactly match the ids shipped in adapters', () => {
     'models.md published_ids and adapter model bindings must be the same set');
 });
 
+test('frontend policy binds the UI agent to Fable with independent verification', () => {
+  const ui = read('adapters/opencode/agents/ui.md');
+  assert.equal(registryJson().roles.ui, 'claude-fable-5.1');
+  assert.equal(frontmatterModel(ui), `github-copilot/${registryJson().roles.ui}`);
+  assert.match(ui, /^variant: high$/m);
+  assert.match(ui, /invoke `verify-gpt` for independent cross-family/);
+  assert.match(frontmatterModel(read('adapters/opencode/agents/verify-gpt.md')), /^github-copilot\/gpt-/);
+  assert.match(read('skills/developer/model-routing/SKILL.md'), /UI\/UX work uses the `ui` tier before generic worker selection/);
+  assert.match(read('adapters/opencode/agents/sdlc.md'), /HANDOFF READY: ui/);
+});
+
 test('registry carries a parseable review date', () => {
   assert.ok(/Last reviewed: \d{4}-\d{2}-\d{2}/.test(registry), 'models.md must state "Last reviewed: YYYY-MM-DD"');
 });
