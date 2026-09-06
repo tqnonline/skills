@@ -10,4 +10,6 @@ Branding applies one identity to every surface an agent can help produce. Six us
 
 `press` remains the deterministic document renderer. The common engine generates a compatible palette file for any profile, but final PDF accessibility and print proof still require artifact-level review.
 
+`atlas-azure` turns a repository or implementation plan into a reference architecture pack. It records evidence and assumptions, authors numbered official-icon SVG diagrams on A4 or A3 sheets, and combines press prose with diagram plates and generated flow tables in a branded HTML and PDF. Technical and visual inspection remain required after structural validation.
+
 The group installs on its own and references no other group.
