@@ -10,6 +10,13 @@ perfectly well formed and never be chosen.
 This directory measures the first half of that: does the catalog's own wording
 get the right skill picked.
 
+The [Atlas Azure staged harness](atlas-azure/README.md) separately evaluates
+generated architecture packs. It reveals five cumulative SaaS specifications,
+freezes PDFs and diagrams, and records independent LLM critiques for four
+audiences. Its controller runs offline; native agent threads perform the live
+generation and review. It is a single-arm evaluation, not the paired-arm
+comparison described below.
+
 ## What runs today
 
 `run-routing.mjs` reads every promoted skill's description straight from the
