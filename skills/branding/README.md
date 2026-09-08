@@ -12,4 +12,6 @@ Branding applies one identity to every surface an agent can help produce. Six us
 
 `atlas-azure` turns a repository or implementation plan into a reference architecture pack. It records evidence and assumptions, authors numbered official-icon SVG diagrams on A4 or A3 sheets, and combines press prose with diagram plates and generated flow tables in a branded HTML and PDF. Technical and visual inspection remain required after structural validation.
 
+`atlas-aws` applies the same evidence discipline to AWS while adding account, Region, VPC, identity, placement, and asset-provenance contracts. It produces A4 and A3 detail views and can add a requested A1 integrated overview. Official icons remain exactly 96 by 96 sheet units, and an independent four-persona judgment is required; neither validation nor review proves deployment behavior.
+
 The group installs on its own and references no other group.
