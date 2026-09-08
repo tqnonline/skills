@@ -60,6 +60,8 @@ jobs:
       # Examples bound to repository fixtures and scripts are re-run by the
       # test suite; a broken one fails the build here rather than shipping
       # a page that has drifted from its source.
+      - name: Install PDF inspection tools
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - name: Run test suite
         run: node scripts/run-tests.mjs
 
