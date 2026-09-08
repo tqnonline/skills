@@ -12,6 +12,7 @@ jobs:
         with:
           node-version: '20'
       - run: node scripts/validate.mjs
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - run: node scripts/run-tests.mjs
       - run: node scripts/gen-openai-yaml.mjs
       - run: node scripts/gen-amp-doctrine.mjs --check

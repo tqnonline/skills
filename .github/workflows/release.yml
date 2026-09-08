@@ -19,6 +19,7 @@ jobs:
           node-version: '20'
       - run: npm install
       - run: node scripts/validate.mjs
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - run: node scripts/run-tests.mjs
 
       # Decide the branch of the release ourselves rather than reading it back

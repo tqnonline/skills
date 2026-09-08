@@ -25,6 +25,10 @@ Apply every step in architecture-pack mode. In skill-patch mode, use the reviewe
 4. Compare revisions for lost requirements and stale current settings. Distinguish new visual defects from inherited source defects. Preserve unresolved findings until source-backed closure; a different judge's silence is not evidence of a fix.
 5. Apply all four perspectives below. Return evidence-backed findings and the decision rule's verdict. Do not repair the artifact during judgment.
 
+For diagram readability, verify concise action labels beside arrows and separate stable reference badges. A reader must not need the flow table merely to identify an action. Inspect titled, bulleted rule callouts and actual labeled line-and-arrow legend samples, with print and legal metadata separate. Check nearby route qualifications, unobscured connectors, and readable full-view and close-up browser/PDF renders at the declared size. Record missing or ambiguous presentation as findings under directed flows and readability; passing geometry or text extraction alone is insufficient. Preserve provider icon rules and disclose reduced-paper readability limits.
+
+Count the introduction: only a title and a plain-English description of 50–100 words may appear above the diagram. Check that all legends and supporting notes sit below it in aligned sections, while necessary component/action labels and short route qualifiers remain visible in the body. Verify every architecture connector uses straight horizontal or vertical segments and right-angle bends, with no curves or ambiguous junctions. Inspect the actual SVG and PDF header, footer, and dense routing at the declared print scale. Treat unexplained jargon, misplaced legends, and routed text collisions as review findings, not cosmetic preferences.
+
 ## Audience rubric
 
 Score `clarity`, `complexity`, and `understandability` from 1 to 5 for each audience. Complexity means management of necessary complexity, not number of services. Clarity measures explicit, consistent explanation; understandability measures whether the audience can perform its review task without guessing.

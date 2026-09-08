@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: '20'
       - run: node scripts/validate.mjs
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - run: node scripts/run-tests.mjs
       - name: Check registry freshness
         id: freshness
@@ -49,6 +50,7 @@ jobs:
         with:
           node-version: '20'
       - run: node scripts/validate.mjs
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - run: node scripts/run-tests.mjs
       - name: Require API key for a real research run
         if: inputs.dry_run == false
