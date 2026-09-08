@@ -38,6 +38,29 @@ Start with a one-page executive summary: purpose, business outcome, major choice
 
 Write a limitations paragraph beside each recommendation. State recovery time and recovery point objectives as targets unless tested. Record cost inputs and estimate dates rather than a fabricated monthly total. Mark implementation guidance as a proposal when no deployment has been verified.
 
+## Deployment-realism review
+
+Before export, challenge the following contracts where they apply. Record a source-backed answer or a named unresolved decision; do not add services merely to fill the table. Recheck current Azure semantics in official documentation. These checks guide reasoning; the assembler cannot prove them.
+
+| Contract | Required cross-check |
+|---|---|
+| Capacity | Reconcile arrival rate, mean full-request duration and active-request limit. Required concurrency is arrival rate × mean duration before headroom. Budget interactive and background work together, including tokens, retries and drain time. A disclosed contradiction is an unmet workload requirement, not merely an unrun load test. |
+| Egress | Write one rule matrix for source subnet, destination, protocol/port, network security group (NSG), user-defined route (UDR), firewall rule and return path. Routing through a firewall does not rewrite the destination evaluated by an NSG. An IP rule does not distinguish a hostname connection from a connection to its resolved IP address. Include identity, monitoring, build and partner endpoints. |
+| Authentication continuity | Specify the human support identity, customer-approved case-scoped grant, enforcing service, session expiry and audit. For delegated user calls, name the token assertion, scopes/endpoints, protected cache, worker-replacement behavior, reauthentication and resumption rule. Do not assume a long workflow preserves user authorization. |
+| Audit and retention | Identify the export runtime, identity, destination, persistence acknowledgment and retention-lock owner. Distinguish application denial, physical deletion, legal hold and backup retention. State the retention clock; delayed ingestion cannot use object creation age as a substitute for event age. Name the deletion mechanism, bounded lag and restore behavior. |
+| Recovery admission | Separate core read/write readiness from external executor reactivation. State which fence and reconciliation evidence each gate requires; uncertain partner effects must not silently block unrelated core recovery. Treat availability budgets and recovery objectives separately and expose their tension. |
+| Operating capacity | Bound manual exception arrival rate, handling time, queue age and response targets against available trained staff and coverage hours. Identify escalation and overflow behavior. For simultaneous customer recoveries, account for operator concurrency, approval roles and shared dependencies. Cost and recovery commitments must include this human capacity, not only cloud resources. |
+| Security-state recovery | Identify a loss-independent source and completeness checkpoint for revocations, access changes, deletions and holds. If completeness cannot be proven after restore, specify session invalidation and affected-data denial until authoritative reconciliation. Test loss of a recent security change, not only business-row recovery. |
+| Effective permissions | Separate application restrictions from permissions the platform actually enforces. Record broad credential scopes, scanner network exceptions and shared-container write privileges as visible residual risks with an owner. Use the actual data protocol in flow tables, not a generic HTTPS label for SQL traffic. |
+
+Keep proposed tests distinct from executed results. A coherent untested design and an internally contradictory design are different findings. Neither a populated schema nor an attractive diagram resolves an implementation decision.
+
+## Cumulative revisions and critique
+
+For an evolving pack, retain stable IDs but update the whole explanation. Maintain one current configuration and placement table by tier, environment and region, including narrative-only recovery dependencies. Check executive summary, sizing, service-plan counts, protocol/auth fields, risks and all diagrams against it. Label historical settings as historical; do not leave them as competing current instructions. Recheck both ends of every cross-region connector after aggregation.
+
+When judge feedback is supplied, keep a finding register with source location, severity, affected contract, disposition and closure evidence. A later judge's silence is not closure. Deduplicate the same issue raised by several personas without discarding their raw critiques. Distinguish defects introduced by an overview from inherited source limitations. Preserve frozen evaluation outputs; apply repairs in a new version. Run the independent pass in `REVIEW.md` before delivery, without claiming stronger reliability from a single four-persona review.
+
 ## Composition and portability
 
 This skill owns evidence extraction, the architecture model, SVG composition, and pack assembly. It can consume a repository brief, architecture decision record, or approved plan from any upstream workflow; it does not require another group's installation or impose a software delivery lifecycle gate.
