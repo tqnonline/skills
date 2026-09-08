@@ -1,0 +1,308 @@
+{
+  "schema": 1,
+  "independent": true,
+  "reviewerThread": "https://ampcode.com/threads/T-01a07b46-bb5d-761d-841d-61d23e8d6796",
+  "reviewer": {
+    "runtime": "Amp",
+    "modelIdentity": null,
+    "method": "One independent context applying four audience perspectives, not four independent experts. No delegation, author conversation, other threads or prior stage judgments were consulted.",
+    "limits": "Ordinal communication assessment of the supplemental overview. This is not a new deployment certification, a statistical comparison, or an assessment of all 126 source PDF pages. No Azure resources were provisioned, no artifacts repaired and nothing published."
+  },
+  "scope": "Final single integrated solution/platform visual, judged against overview-brief.md, rubric.json, the supplied composition reference, and relevant frozen Stage 5 model and narrative evidence.",
+  "sourceRevision": "e68d563bc701d177147da65cb62d05dc9f557171",
+  "verdict": "revise",
+  "summary": "The overview is a readable, genuinely integrated poster with strong isolation and recovery caveats. All 56 canonical component IDs and all 97 active flow records are preserved. However, the primary proposal bridge is placed in the wrong regional plane, and the combined US partner/identity label drops the source's non-regional identity qualification. These are material overview defects, not inherited deployment limitations. Smaller problems concern incomplete narrative-only regional mapping, the equipment subscription boundary, first-time-reader navigation and visibility of security exceptions.",
+  "integrity": {
+    "archiveScreening": "Before extraction, every member was checked for absolute paths, parent traversal and non-file/non-directory types. Both archives contained only regular files and directories. Extracted roots are sibling overview/ and stage-05/; no links or special files were accepted.",
+    "archiveHashes": {
+      "overview.tar.gz": {"expected": "70e99bd38ebc67ad0466e292ee8b6e026c64be9b93fa3896396f1e6191c3026a", "matched": true},
+      "stage-05.tar.gz": {"expected": "d79bf21439672c1a99fedf133f532d9fc090074267200a85febacad66921bbb8", "matched": true}
+    },
+    "manifestVerification": "sha256sum -c SHA256SUMS passed for every listed file in both extracted directories.",
+    "sourceHashes": "The five source_hashes in overview/coverage.json matched the supplied Stage 5 files. The source is the supplied local revision, not origin/main.",
+    "checker": {
+      "command": "/tmp/overview-review-venv/bin/python overview/check-overview.py",
+      "result": "pass",
+      "environmentNote": "The first attempt failed because pymupdf was absent. PyMuPDF and Pillow were installed into an isolated /tmp virtual environment; the unchanged checker then passed.",
+      "pdfPages": 1,
+      "pdfSizeMm": [1200.15, 845.6506],
+      "pngPixels": [8800, 6200],
+      "minimumPdfFontPt": 15.4575,
+      "searchableCharacters": 9407,
+      "wordsOutsidePdf": 0,
+      "officialIconInstances": 25,
+      "officialIconFamilies": 14,
+      "svgSafety": "No prohibited active elements or external asset references found by the checker, including in embedded icons. Embedded artwork hashes match frozen provenance.",
+      "caution": "These checks establish artifact integrity, not correct architecture placement or complete narrative coverage. The bridge defect passes the supplied checker."
+    },
+    "independentModelComparison": {
+      "canonicalNodeSetEqualsMappedNodeSet": true,
+      "canonicalNodeCount": 56,
+      "originalFlowsDeepEqualStage5Flows": true,
+      "activeFlowCount": 97,
+      "retiredFlow41Absent": true,
+      "uniqueOverviewJourneys": 30
+    }
+  },
+  "inspectedArtifacts": [
+    {
+      "path": "overview/solution-platform-overview.svg",
+      "method": "Opened the actual self-contained SVG in Chromium using agent-browser. Inspected a full-canvas capture at 2200 x 1550 and readable-scale browser captures with the SVG at 4400 x 3100. XML path and component annotations were inspected separately.",
+      "regions": ["Full canvas", "Primary business network and managed services, x620-2420 y810-1910", "SQL/secret/evidence cross-region routes and bridge/recovery junction, x2100-3900 y1280-2380", "Equipment, subscription boundary and legend, x600-2400 y1950-3050"]
+    },
+    {
+      "path": "overview/solution-platform-overview.png",
+      "method": "Inspected a reduced full canvas plus readable-scale crops derived from the actual 8800 x 6200 PNG. Direct full-resolution upload exceeded the media tool limit; local cropping and JPEG conversion avoided relying on a thumbnail alone.",
+      "regions": ["Full canvas", "Provider identity, fleet, registry, nonproduction and A1/A2/A27/A28", "Customer identities, mobile ingress, partner and hybrid routes, standard customer", "Lower recovery/equipment card endings and complete legend"]
+    },
+    {
+      "path": "overview/solution-platform-overview.pdf",
+      "pages": [1],
+      "method": "Rendered the actual PDF through PyMuPDF and inspected the full page and six overlapping readable-scale regions. Region coordinates below are normalized to the SVG's 4400 x 3100 canvas, not PDF points. Crop-edge continuation was not counted as document clipping.",
+      "regions": [
+        {"name": "Provider and title", "bounds": [0, 0, 4400, 710]},
+        {"name": "Customer identities, mobile, partners, hybrid and standard", "bounds": [0, 650, 900, 2480]},
+        {"name": "Primary network and business services", "bounds": [880, 650, 3000, 1720]},
+        {"name": "Premium secondary and recovery authority", "bounds": [2900, 650, 4380, 2480]},
+        {"name": "Equipment plane, evidence crossing and proposal return", "bounds": [850, 1640, 3080, 2520]},
+        {"name": "Lower cards, subscription boundary and legend", "bounds": [0, 2480, 4400, 3100]}
+      ]
+    },
+    {"path": "overview/source-coverage.md", "locations": ["Components", "Numbered overview journeys", "Legend, abstractions and omissions", "Large-format exception"]},
+    {"path": "overview/coverage.json", "locations": ["components", "journeys", "original_flows", "coverage", "source_hashes"]},
+    {"path": "overview/icon-provenance.json", "locations": ["Embedded artwork hashes checked against supplied SVG and frozen source"]},
+    {"path": "overview/verification.md", "locations": ["Deliverables, format exception, export method and local rendering limitations; treated as an author receipt, not independent proof"]},
+    {"path": "stage-05/architecture.json", "locations": ["All 56 nodes and 97 flows compared with coverage.json; selected flow payload, permission, failure and kind fields traced"]},
+    {
+      "path": "stage-05/reference-architecture.md",
+      "locations": ["Lines 7-128: solution, ownership and network baseline", "Lines 299-425: mobile, evidence and hybrid contracts", "Lines 428-560: equipment, bridge placement, credentials and incident recovery", "Lines 564-674: fleet split, regional dependencies, writer authority, management and recovery gates", "Lines 678-680: global metadata qualification"]
+    },
+    {
+      "path": "stage-05/reference-architecture.pdf",
+      "pages": [29, 37, 44, 45, 46, 53],
+      "method": "Actual pages rendered and visually inspected, not only text extraction.",
+      "regions": ["Page 29 scanner network exception and hybrid boundary", "Page 37 bridge placement and ServiceConnect caveat", "Pages 44-46 premium dependency table and dual-write protocol", "Page 53 identity metadata and AI/security caveats"]
+    },
+    {"path": "../overview-reference.png", "base": "overview/", "method": "Full composition inspected: nested network/subnet boundaries, separate private endpoint objects and managed services, orthogonal arrows and numbered journeys. No reference-specific service was presumed mandatory."}
+  ],
+  "findings": [
+    {
+      "id": "O1",
+      "severity": "major",
+      "origin": "overview",
+      "title": "Primary proposal bridge is drawn in the wrong regional plane",
+      "evidence": [
+        {"path": "overview/solution-platform-overview.svg", "location": "bridge card x2430 y2080 w520 h200, inside CENTRAL US customer-dedicated equipment plane; A25 enters from Cosmos and A26 crosses to primary API"},
+        {"path": "overview/solution-platform-overview.pdf", "location": "Page 1, lower-center equipment panel and upper-right drapps card"},
+        {"path": "stage-05/reference-architecture.md", "location": "Line 488: bridge is East US 2 P1v3 with integration 10.40.11.0/24 and local API/agent private endpoints; lines 576-581: premium adds a counterpart in the separate Central US business network"},
+        {"path": "stage-05/reference-architecture.pdf", "location": "Page 37 bridge row; page 44 premium API/sync/bridge row"}
+      ],
+      "explanation": "Stage 5 puts the normal bridge beside the business API, reading Cosmos across regions. The overview instead puts its canonical bridge in Central US equipment and draws the API request across regions. The drapps card also lists a regional bridge counterpart. This reverses which normal dependency is cross-region and obscures which business network owns the bridge's private access and recovery. The source narrative is explicit; this is not an inherited unresolved placement.",
+      "requestedRevision": "Represent the canonical bridge in East US 2 business services and retain its premium counterpart in the separate Central US business region, or use an explicitly location-neutral logical grouping that states both placements. Update A25/A26 and the sidecar consistently. No change to the frozen design is needed."
+    },
+    {
+      "id": "O2",
+      "severity": "major",
+      "origin": "overview",
+      "title": "Combined US partner/identity label loses a material residency qualification",
+      "evidence": [
+        {"path": "overview/solution-platform-overview.svg", "location": "partners card x80 y1320 w480 h180: US partner / identity endpoints, containing Entra / Graph / approved build endpoints"},
+        {"path": "overview/solution-platform-overview.pdf", "location": "Page 1, left external-endpoint card reached by A13"},
+        {"path": "stage-05/reference-architecture.md", "location": "Line 680 explicitly excludes global Azure identity, control-plane and DNS metadata from US-exclusive claims"},
+        {"path": "stage-05/reference-architecture.pdf", "location": "Page 53, first paragraph under Security and data"}
+      ],
+      "explanation": "The US modifier visually applies to the combined group, not only the CRM. Neither the card nor the poster legend restores the source's distinction between US business content and non-regional identity/control metadata. This can lead a residency review to accept a stronger claim than the source makes. It is a misleading overview label, not evidence of an actual data-residency violation.",
+      "requestedRevision": "Separate the US CRM qualification from global or tenant-dependent identity/control endpoints and explicitly preserve the metadata exception on the visual.",
+      "primarySource": {
+        "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/data-residency/",
+        "location": "Data storage for non-regional services",
+        "quote": "Microsoft Entra ID (formerly Azure Active Directory) operates as a non-regional service and based on customer requirements, including availability and scalability, may store Microsoft Entra directory data globally.",
+        "qualification": "This does not mean every tenant's directory data is stored globally. It establishes that a blanket US-only inference from the diagram is unsupported. Tenant-specific residency needs its own evidence."
+      }
+    },
+    {
+      "id": "O3",
+      "severity": "minor",
+      "origin": "overview",
+      "title": "Physical equipment sits inside the Azure production-subscription outline",
+      "evidence": [
+        {"path": "overview/solution-platform-overview.svg", "location": "premium-subscription bounds x650 y610 w3690 h2080 contain equipment card x710 y2080 w480 h200"},
+        {"path": "overview/source-coverage.md", "location": "Legend says devices are outside the Central US region, but does not explain their placement inside the production subscription"},
+        {"path": "stage-05/architecture.json", "location": "equipment and equipment-ops nodes: customer equipment and customer-owned commissioning/maintenance"}
+      ],
+      "explanation": "The devices are correctly outside the Azure equipment-region rectangle and explicitly labeled customer US sites. However, unlike the mobile client and on-prem ERP, they remain inside an outline labeled production subscription. That weakens the ownership grammar. The label mitigates the ambiguity, so this is not treated as a deployment blocker.",
+      "requestedRevision": "Keep the physical-device card outside the subscription outline, or label the enclosing shape as a logical customer solution boundary and draw Azure subscription ownership separately."
+    },
+    {
+      "id": "O4",
+      "severity": "minor",
+      "origin": "overview",
+      "title": "Canonical-ID coverage is stronger than narrative-only regional coverage",
+      "evidence": [
+        {"path": "overview/source-coverage.md", "location": "Components table: drapps maps api-dr/executor-dr; drstores maps vault-dr/evidence-dr; introductory statement groups unnamed regional counterparts"},
+        {"path": "overview/solution-platform-overview.svg", "location": "drapps and drstores cards in Central US warm business region omit explicit regional ingestion/agent, quarantine/scanner and immutable audit-copy responsibilities"},
+        {"path": "stage-05/reference-architecture.pdf", "location": "Page 44 Ingestion and agent apps; page 45 Quarantine/scanning and Audit and holds"}
+      ],
+      "explanation": "The source adds meaningful regional dependencies without creating canonical -dr IDs for every one. The overview's broad grouping disclaimer does not map these rows to an explicit group or omission record. All 56 IDs being present is therefore insufficient to prove every material narrative subsystem is accounted for. Primary versions remain visible, and no automatic all-store recovery is claimed, which limits the severity.",
+      "requestedRevision": "Add exact source-row-to-group mappings for narrative-only regional dependencies and distinguish shown, summarized and intentionally omitted detail. Separate new diagrams are unnecessary."
+    },
+    {
+      "id": "O5",
+      "severity": "minor",
+      "origin": "overview",
+      "title": "The first-time reader must leave the poster to learn journey meanings and several terms",
+      "evidence": [
+        {"path": "overview/solution-platform-overview.pdf", "location": "Page 1: arrows carry A1-A30 without action labels; network and recovery cards use NSG, UDR, ACL, GZRS, RTO and RPO; A3-A9 business path has no direct API-to-SQL connector"},
+        {"path": "overview/source-coverage.md", "location": "Numbered overview journeys, particularly A7: direct API/sync SQL paths intentionally not drawn"},
+        {"path": "stage-05/reference-architecture.md", "location": "Lines 76-84 representative's journey and lines 784 onward glossary"}
+      ],
+      "explanation": "The sidecar explains the numbers, and the SQL card identifies durable responsibilities. This prevents a coverage failure, but a junior reader can mistake the visually prominent API-to-worker-to-SQL chain for a mandatory AI path. The poster also starts numbering with release management rather than a complete customer journey. This limits immediate teaching value without making the artifact unreadable.",
+      "requestedRevision": "Supply a compact human-journey reading guide and expand the most important terms. Make direct case-state ownership or the intentional omission unmistakable."
+    },
+    {
+      "id": "O6",
+      "severity": "minor",
+      "origin": "overview",
+      "title": "Important security exceptions survive mainly in the detailed source",
+      "evidence": [
+        {"path": "overview/solution-platform-overview.svg", "location": "objects, iot, processing, cosmos and recovery-gates text; scanner pending/error and public device ingress are visible, but scanner network exception and ServiceConnect residual scope are not"},
+        {"path": "stage-05/reference-architecture.pdf", "location": "Page 29 scanner resource-instance exception; page 37 ServiceConnect broader-than-consumer-group scope"},
+        {"path": "stage-05/reference-architecture.md", "location": "Lines 520 and 674: bridge container-write residual privilege and security sign-off gates"},
+        {"path": "overview/coverage.json", "location": "original_flows 61/68/70 and coverage identity-access/security retain relevant source details"}
+      ],
+      "explanation": "The poster does not falsely claim that private endpoints alone disable public access. Nevertheless, its unresolved-gates summary emphasizes availability and capacity while security reviewers must search elsewhere for the exceptional scanner route, broad hub credential and bridge write privilege. These are inherited source risks whose prominence is reduced by the overview, not new vulnerabilities introduced by a diagram.",
+      "requestedRevision": "Give the three residual permissions or network exceptions a short visible callout and exact source references. Do not imply that the diagram resolves or approves them."
+    }
+  ],
+  "subsystemMappingAudit": [
+    {"subsystem": "Provider ownership, governance and release control", "sourceIds": ["provider-id", "hierarchy", "fleet", "fleet-db", "rings", "runner", "test-sub"], "overviewGroups": ["provider", "fleet", "registry", "rings", "runner", "nonprod"], "source": "stage-05/reference-architecture.md:86-105,624-642", "result": "covered", "note": "A1/A2/A27/A28 distinguish releases and allowlisted metadata from runtime. Nonproduction is explicitly additional and synthetic. Provider subscription regional details are summarized rather than fully drawn."},
+    {"subsystem": "Customer ownership and tier/region isolation", "sourceIds": ["customer-sub"], "overviewGroups": ["premium-subscription", "standard"], "source": "stage-05/reference-architecture.md:564-576", "result": "partial", "note": "40 dedicated premium and 160 standard customers are explicit, without a cross-customer data route. O1 and O3 qualify regional and subscription-boundary correctness."},
+    {"subsystem": "Customer human and source identities", "sourceIds": ["staff", "customer-id", "dispatcher", "recipient", "source"], "overviewGroups": ["humans"], "source": "stage-05/reference-architecture.md:23-27,76-94", "result": "covered-with-aggregation", "note": "Grouped actors and SSO are distinct from provider ownership. Issuer/session/ACL enforcement and source lifecycle details remain in the detailed pack; A3 is a client request, not an identity-provider payload proxy."},
+    {"subsystem": "Ingress, private access and outbound routing", "sourceIds": ["gateway", "dns", "firewall", "vpn"], "overviewGroups": ["gw", "pe", "integration", "egress", "private-dns"], "source": "stage-05/reference-architecture.md:107-128,383-400", "result": "covered", "note": "Managed app/data services remain outside primary VNet; private NICs and outbound integration are distinguished. Firewall and VPN are grouped, not a claim that they share a required deployment subnet. Individual data PE/DNS paths are explicitly omitted."},
+    {"subsystem": "Case, mobile and workflow authoritative state", "sourceIds": ["api", "sync", "sql", "coordinator", "executor"], "overviewGroups": ["case", "sql", "workers"], "source": "stage-05/reference-architecture.md:172-297,337-367,600-622", "result": "covered-with-aggregation", "note": "Separate identities/plans, deterministic authorization, exact versions/expiry and regional epoch are visible. API SQL links and approval state transitions are not separately drawn; see O5."},
+    {"subsystem": "Knowledge, model and ingestion", "sourceIds": ["agent", "ingest", "search", "model"], "overviewGroups": ["workers", "knowledge"], "source": "stage-05/reference-architecture.md:150-180,678-690", "result": "covered-with-aggregation", "note": "Source ACL/deletion, untrusted documents, US Data Zone and no agent execution credentials are visible. Regional narrative-only replicas need O4's mapping."},
+    {"subsystem": "Object state, evidence and scanning", "sourceIds": ["blob", "quarantine", "evidence", "scanner"], "overviewGroups": ["objects"], "source": "stage-05/reference-architecture.md:369-381", "result": "covered-with-aggregation", "note": "Separate accounts and pending/error never clean are explicit; scanner-specific access and regional replicas need clearer references (O4/O6)."},
+    {"subsystem": "Secrets, audit and local operations", "sourceIds": ["vault", "monitor"], "overviewGroups": ["security"], "source": "stage-05/reference-architecture.md:260-284,624-642,678-710", "result": "covered-with-aggregation", "note": "Local secrets, support audit and content-free fleet export are clear. This is not proof of executed audit/retention tests; regional immutable copies are not individually mapped."},
+    {"subsystem": "Mobile field client", "sourceIds": ["mobile"], "overviewGroups": ["mobile"], "source": "stage-05/reference-architecture.md:299-367", "result": "covered", "note": "Eight-hour grant, assigned subset, local encryption, server rechecks and noninstant wipe are visible. A30 reaches the same WAF as normal case ingress."},
+    {"subsystem": "Customer hybrid and external dependencies", "sourceIds": ["onprem-edge", "erp", "crm", "external"], "overviewGroups": ["hybrid", "partners"], "source": "stage-05/reference-architecture.md:237-268,383-400,680", "result": "partial", "note": "Private ERP, public CRM, uncertain effects and customer-isolated overlapping addresses are retained. O2 concerns the identity endpoint geography label, not ERP placement. Retired flow 41 is not restored."},
+    {"subsystem": "Equipment and customer maintenance", "sourceIds": ["equipment", "equipment-ops", "iot", "telemetry-net"], "overviewGroups": ["equipment", "iot", "telemetry-boundary"], "source": "stage-05/reference-architecture.md:428-496", "result": "partial", "note": "Device certificates, signed maintenance, public ingress, per-customer fixture scale and separate telemetry network are visible. Physical subscription placement is ambiguous (O3); credential exception prominence is limited (O6)."},
+    {"subsystem": "Equipment processing and business proposal bridge", "sourceIds": ["archive", "detector", "raw", "telemetry-db", "bridge"], "overviewGroups": ["processing", "raw", "cosmos", "bridge"], "source": "stage-05/reference-architecture.md:473-560", "result": "partial", "note": "Archive, deterministic state, raw retention, Cosmos outbox and human-approved bounded proposals are represented. Primary bridge regional placement contradicts source (O1). A25 omits reverse acknowledgement explicitly in the sidecar."},
+    {"subsystem": "Premium routing, state and recovery authority", "sourceIds": ["traffic", "gateway-dr", "api-dr", "executor-dr", "sql-dr", "vault-dr", "evidence-dr", "regional-ops"], "overviewGroups": ["traffic", "drnet", "drapps", "drsql", "drstores", "ops"], "source": "stage-05/reference-architecture.md:574-622", "result": "covered-with-qualifications", "note": "DNS-only routing, separate warm business network, asynchronous SQL, vault preparation, application-controlled evidence copies and two-person recovery are explicit. O4 identifies unenumerated narrative-only counterparts."},
+    {"subsystem": "Standard recovery", "sourceIds": ["backup", "restore"], "overviewGroups": ["cold", "standard"], "source": "stage-05/reference-architecture.md:566,692-710", "result": "covered", "note": "Central US cold rebuild, 8-hour/24-hour targets, identity/DNS/replay prerequisites and unproved emergency capacity are visible; no warm standard business standby is implied."}
+  ],
+  "relationshipAudit": {
+    "method": "Compared all 30 directed SVG paths, their arrowhead classes and grouped endpoints with the 30 journey records and their retained source flows. Inspected dense intersections visually. No active source flow was renumbered or silently deleted from the sidecar.",
+    "groupsChecked": {
+      "A1-A2": "Fleet release and registry metadata; direction and classes consistent.",
+      "A3-A5,A30": "Client/WAF/private-app chain. Source/client aggregation is disclosed; SSO token exchange is not separately depicted.",
+      "A6-A9": "Workflow/state/retrieval/evidence aggregation is disclosed. Direct API/sync SQL connections are intentionally omitted, not routed through an AI service by source contract.",
+      "A10-A13": "Outbound integration, firewall, isolated VPN/ERP and public CRM/identity groups have the intended directions. Identity geography needs O2.",
+      "A14-A17": "Traffic Manager uses brown DNS-selection arrows, not a payload proxy. Secondary backend and promoted writer access are correctly directed and qualified.",
+      "A18-A20": "SQL asynchronous copying, staged vault preparation and application evidence copying remain separate mechanisms, not one universal replication arrow.",
+      "A21-A26": "Device, stream, raw/state, outbox and proposal directions are intelligible. A25/A26 cross-region meaning is wrong because of O1's node placement.",
+      "A27-A29": "Signed customer release, allowlisted health export and operator recovery authority use separate control/telemetry classes. Crossings do not represent junctions."
+    },
+    "classificationNote": "A18 is solid blue data replication although source flow 86 is kind control. A14/A15 are brown DNS control although source flows 82/83 are kind runtime. The action labels and protocol meanings make these semantic reclassifications defensible; they were not counted as reversed relationships. Recording the reclassification explicitly would improve sidecar precision.",
+    "scopeLimit": "This audit does not verify Azure routes, identity enforcement, failover behavior or deployment feasibility."
+  },
+  "personas": [
+    {
+      "id": "junior-developer",
+      "scores": {"clarity": 3, "complexity": 3, "understandability": 3},
+      "evidence": [
+        {"path": "overview/solution-platform-overview.pdf", "location": "Page 1, A3-A9/A30 customer path, case/workers/SQL cards and bottom legend"},
+        {"path": "overview/source-coverage.md", "location": "A7 SQL-path omission and journey table"},
+        {"path": "stage-05/reference-architecture.md", "location": "A representative's journey and Glossary and sources"}
+      ],
+      "strengths": ["The gateway-to-private-app route and separation from outbound integration are teachable.", "Manual operation, human approval, scan failure and lost-device limits are stated rather than hidden.", "Stable source IDs and the sidecar allow the reader to find more detailed responsibilities."],
+      "findings": ["O1", "O3", "O5"],
+      "scoreRationale": "The main journey is understandable at anchor 3, but acronyms and grouped responsibilities require identifiable follow-up reading. The poster alone does not teach a complete denied-request sequence or an implementation checklist; no anchor 4 or 5 is warranted."
+    },
+    {
+      "id": "cto",
+      "scores": {"clarity": 4, "complexity": 3, "understandability": 4},
+      "evidence": [
+        {"path": "overview/solution-platform-overview.pdf", "location": "Page 1, provider band, 40-premium/160-standard boundaries and lower-right recovery-gates panel"},
+        {"path": "stage-05/reference-architecture.md", "location": "Final fleet and recovery contract; Independent management, access and deployment rings"}
+      ],
+      "strengths": ["The reader can identify dedicated customer costs, separate nonproduction, release controls and the warm-versus-cold commercial difference.", "The 21.6-minute monthly budget versus 60-minute recovery tension is prominent, with all drills marked NOT RUN.", "Fleet or model failure is not portrayed as mandatory failure of installed customer runtime."],
+      "findings": ["O2", "O4", "O6"],
+      "scoreRationale": "Structure and explicit approval limits support anchor 4 for executive orientation and challenge. Complexity remains at 3: the poster names operational cost categories but does not make staffing, feasible capacity or a complete funding case concrete. Its readability does not cancel the material placement and residency findings."
+    },
+    {
+      "id": "enterprise-architect",
+      "scores": {"clarity": 2, "complexity": 3, "understandability": 2},
+      "evidence": [
+        {"path": "overview/solution-platform-overview.pdf", "location": "Page 1, bridge in equipment plane, primary/secondary network outlines, drapps and drstores"},
+        {"path": "stage-05/reference-architecture.pdf", "location": "Pages 37 and 44-46, bridge and premium dependency placement"},
+        {"path": "overview/coverage.json", "location": "components and journeys A25/A26"}
+      ],
+      "strengths": ["The primary region avoids the common error of placing managed App Service and data services inside private-endpoint subnets.", "Separate SQL, vault and evidence paths preserve different recovery mechanisms.", "The original flow records and source hashes make contradiction checks possible."],
+      "findings": ["O1", "O2", "O3", "O4"],
+      "scoreRationale": "The regional bridge contradiction obstructs a reliable network/placement handoff, matching clarity anchor 2. A reader must choose between poster and narrative for a material deployment relationship, so understandability is 2. The architecture's grouping is otherwise proportionate and explicitly qualified, supporting complexity 3 rather than penalizing service count."
+    },
+    {
+      "id": "security-architect",
+      "scores": {"clarity": 3, "complexity": 3, "understandability": 3},
+      "evidence": [
+        {"path": "overview/solution-platform-overview.pdf", "location": "Page 1, customer/provider identity separation, partners, workers, security and recovery panels"},
+        {"path": "stage-05/reference-architecture.pdf", "location": "Pages 29, 37 and 53, scanner, hub credentials and metadata limits"},
+        {"path": "stage-05/reference-architecture.md", "location": "Line 520 bridge residual privilege; lines 624-642 deployment/support authority"}
+      ],
+      "strengths": ["Customer sign-in is not provider resource ownership; shared management receives no customer business content.", "Models propose while deterministic services authorize, and no sensor command path is drawn.", "A database fence cannot recall remote actions, and identity/control-plane outages can block recovery; both limits are explicit."],
+      "findings": ["O1", "O2", "O3", "O6"],
+      "scoreRationale": "The overview identifies the main trust boundaries and enough unresolved controls for an anchor-3 review. It does not earn anchor 4 because the identity geography label is misleading and material exception details require recovery from the source. No executed control assurance, compliance classification or independent four-expert consensus is implied."
+    }
+  ],
+  "requirementChecks": [
+    {
+      "id": 1,
+      "criterion": "Complete solution/platform coverage against Stage 5, with source-backed mapping of every material subsystem",
+      "status": "partial",
+      "evidence": ["overview/coverage.json: 56 mapped node IDs and 97 unchanged original flows", "overview/source-coverage.md: Components table", "stage-05/reference-architecture.pdf:44-46 narrative-only premium dependencies"],
+      "assessment": "Every canonical component and major solution family is represented. Exact mapping for narrative-only regional ingestion/agent, quarantine/scanner and audit-copy dependencies is incomplete; O4. Node presence does not establish correct placement; O1."
+    },
+    {
+      "id": 2,
+      "criterion": "Correct ownership, customer, region, identity and network boundaries, including private endpoint versus managed service placement",
+      "status": "partial",
+      "evidence": ["overview/solution-platform-overview.pdf:1 primary VNet, bridge, partners and equipment cards", "stage-05/reference-architecture.pdf:37,44,53"],
+      "assessment": "Primary private-endpoint versus service placement and customer/provider isolation are strong. O1 contradicts regional bridge placement, O2 loses the global metadata qualification, and O3 weakens subscription-boundary semantics."
+    },
+    {
+      "id": 3,
+      "criterion": "Correct directed relationships, numbering and runtime versus control/telemetry distinctions",
+      "status": "partial",
+      "evidence": ["overview/solution-platform-overview.svg: all 30 data-journey paths", "overview/source-coverage.md: Numbered overview journeys", "stage-05/reference-architecture.md:488,496"],
+      "assessment": "Arrows have direction, unique A numbers and distinct line classes. DNS selection is not payload transit and retired flow 41 is absent. However, A25/A26 communicate the wrong cross-region dependency because of O1. Other disclosed aggregations and semantic class changes are acceptable at overview depth."
+    },
+    {
+      "id": 4,
+      "criterion": "Honest abstraction without hidden dependencies, contradictions or implied approval of unresolved design",
+      "status": "partial",
+      "evidence": ["overview/source-coverage.md: Legend, abstractions and omissions", "overview/solution-platform-overview.pdf:1 footer and recovery gates", "stage-05/reference-architecture.pdf:29,37,44-46,53"],
+      "assessment": "The poster explicitly disclaims deployment approval and explains many omissions. Recovery limits are unusually clear. General aggregation disclaimers do not excuse O1/O2; O4/O6 also leave some material details less discoverable than the brief requires."
+    },
+    {
+      "id": 5,
+      "criterion": "Readability as one integrated visual, including dense regions, crossings, labels, contrast and zoom/print usability",
+      "status": "met",
+      "evidence": ["overview/solution-platform-overview.svg: full canvas and readable-scale browser views", "overview/solution-platform-overview.png: full canvas and crops", "overview/solution-platform-overview.pdf:1 full page and six overlapping crops", "overview/source-coverage.md: Large-format exception"],
+      "assessment": "This is one integrated architecture, not a contact sheet. Typography and icons remain readable at appropriate zoom; dense A12/A13, A18-A20/A28, A25/A26 and A29 regions have traceable routes without observed text collisions. Crossings are explicitly not joins. The reference's nested boundaries, external managed services and orthogonal numbered connectors are adapted without copying its product lineup or branding. A 1.2-meter poster cannot be read as a normal chat thumbnail or A3 handout, and that trade-off is honestly documented."
+    },
+    {
+      "id": 6,
+      "criterion": "Usefulness for junior developer, CTO, enterprise architect and security architect",
+      "status": "partial",
+      "evidence": ["overview/solution-platform-overview.pdf:1", "overview/source-coverage.md: journey mappings", "stage-05/reference-architecture.pdf:37,44-46,53", "personas in this judgment"],
+      "assessment": "Useful for executive orientation and guided developer/security discussion. It is not yet reliable for independent enterprise-architecture placement review because of O1/O2. O5 limits immediate teaching value. One persona has scores below 3, so the rubric's pass threshold is not met."
+    }
+  ],
+  "inheritedSourceLimitations": [
+    {"id": "S1", "source": "stage-05/reference-architecture.md:568-572,600-622", "limitation": "Premium availability/recovery targets are unproved; asynchronous SQL loss and old external effects are not solved by DNS or an epoch.", "overviewTreatment": "Accurately prominent in drsql, drstores and recovery gates. Not a new overview defect and not penalized merely because Azure drills were out of scope."},
+    {"id": "S2", "source": "stage-05/reference-architecture.md:377,492,520", "limitation": "Scanner network exception, ServiceConnect residual scope and bridge write privileges need security acceptance.", "overviewTreatment": "Preserved in detailed mapping/source but less visible on the poster; O6 concerns communication, not a claim that the reviewer discovered an implemented exploit."},
+    {"id": "S3", "source": "stage-05/reference-architecture.md:566,574-598,644-674", "limitation": "Capacity, regional model support/quota, evidence availability, commercial nonproduction count and recovery staffing remain unconfirmed.", "overviewTreatment": "Mostly disclosed. No price, quota, deployability or measured service commitment was inferred from SKU labels."}
+  ],
+  "decisionRule": "Revise because O1 and O2 are major overview defects, five assessment criteria are partial, and enterprise-architect scores fall below 3. Artifact inspection was possible, so blocked is not appropriate. The readable poster and passing integrity checker cannot cancel these findings. A future passing overview would still not overturn a failed source-stage deployment-realism judgment.",
+  "repairsPerformed": false
+}

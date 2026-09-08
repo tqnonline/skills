@@ -32,7 +32,7 @@ contract:
 4. Select the brand with the user. Call the requested theme skill through the Skill tool; it calls `branding-system` and can produce `press-palette.md`. Reuse an established project design when present. With neither, offer a neutral, print-first technical style or a named theme. Do not imply Microsoft authorship or endorsement.
 5. Write `architecture.json`, including its required platform coverage records, and `reference-architecture.md` using `OUTPUT.md`. Distinguish observed, proposed, and unknown claims. Explain service configuration, landing-zone placement, inherited controls, workload obligations, alternatives, and failure behavior. Present the outline and consequential decisions before polishing.
 6. Read `SOURCES.md` for official icon sources and Microsoft examples. Inspect the relevant samples as visual references, not architecture templates to copy blindly. Obtain only the icon families the design uses. Record source, package version, retrieval date, and hashes. Preserve official artwork; branding changes its surroundings, not the icons.
-7. Read `DIAGRAMS.md`. Author editable, self-contained platform and workload SVG views from the canonical model; add network/security and recovery detail where relevant. Use A4 for a readable small view and A3 for a larger one; split views before shrinking labels. Put stable flow numbers beside directed traffic connectors and generate their explanatory tables from the same model.
+7. Read `DIAGRAMS.md`. Author editable, self-contained platform and workload SVG views from the canonical model; add network/security and recovery detail where relevant. Use 96-unit service icons by default, with a 64-unit minimum; enlarge cards rather than crowd labels. Use A4 for a readable small view and A3 for a larger one; follow the explicit single-visual exception when requested. Put stable flow numbers beside directed traffic connectors and generate their explanatory tables from the same model.
 8. Confirm the caller accepts the narrative for rendering, including an explicitly labeled review draft if that is the requested stage. Call the Skill tool with `press` and render the approved Markdown to HTML with the selected palette and `--html-only`. Press does not embed images; do not send it Markdown image syntax and expect diagrams.
 9. Run this skill's assembler from its installed directory, using absolute input paths:
 
@@ -44,8 +44,9 @@ contract:
    ```
 
    It validates the model and SVGs, adds diagram sheets and canonical flow tables to press HTML, and prints a PDF. `--html-only` explicitly omits PDF. Node 20 powers press; Python 3.9 or newer and a Chromium-family browser power assembly. The scripts run locally and require no cloud credentials or proprietary drawing software.
-10. Open each SVG and the assembled HTML. Inspect every PDF page, including A3 sheets, at intended print scale. Follow `DIAGRAMS.md` and `OUTPUT.md`: check labels, arrows, routes, icon fidelity, flow agreement, clipping, page breaks, links, and font substitution. Capture representative views. A successful script is not evidence of architectural correctness or pixel-perfect layout.
-11. Deliver the editable sources, SVGs, HTML, real PDF, icon provenance, and verification receipt. List unresolved assumptions and exact checks run. Keep a draft labeled as a draft. Ask the design owner to approve consequential choices; do not claim approval or publish externally.
+10. Apply `METHOD.md`'s deployment-realism and cumulative-consistency checks. Open each SVG and the assembled HTML. Inspect every PDF page, including A3 sheets, at intended print scale. Follow `DIAGRAMS.md` and `OUTPUT.md`: check placement, labels, arrows, routes, effective icon size, flow agreement, clipping, page breaks, links, and font substitution. Capture representative views. A successful script is not evidence of architectural correctness or pixel-perfect layout.
+11. Read `REVIEW.md` and run the independent quality judgment. Require evidence-backed scores from all four audience perspectives and save `quality-review.json`. Only a passing judgment permits `review-ready`; correct authorized source errors and re-review, or return the unresolved draft. Preserve frozen benchmark results.
+12. Deliver the editable sources, SVGs, HTML, real PDF, icon provenance, verification receipt, and independent judgment. List unresolved assumptions and exact checks run. Keep a draft labeled as a draft. Ask the design owner to approve consequential choices; do not claim approval or publish externally.
 
 ## Stop conditions
 
@@ -55,6 +56,7 @@ contract:
 - Model, numbering, SVG safety, or page-size validation fails → repair the source, not the check.
 - Landing-zone coverage or the platform view is absent → the pack is incomplete even if its application diagram is correct.
 - Browser or PDF inspection is unavailable → report `incomplete` with missing checks and files, not a completed PDF delivery.
+- Independent judgment is unavailable or blocked → report `incomplete`; a completed `revise` judgment leaves `needs-decision`, never `review-ready`.
 - Diagrams imply infrastructure absent from the code → separate current and proposed views before delivery.
 
 ## Output contract

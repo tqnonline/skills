@@ -2,7 +2,7 @@
 
 ## Files
 
-Deliver `architecture.json`, `reference-architecture.md`, one SVG per view, the selected palette, assembled `reference-architecture.html`, actual `reference-architecture.pdf`, and `verification.md`. Keep source evidence and icon provenance in the model. The assembled HTML embeds icons and diagrams; it must open without network access. Use a new output directory or explicit filenames to avoid overwriting unrelated work. The assembler refuses existing output files; remove only stale artifacts from your own run or choose a fresh directory.
+Deliver `architecture.json`, `reference-architecture.md`, one SVG per view, the selected palette, assembled `reference-architecture.html`, actual `reference-architecture.pdf`, `verification.md`, and `quality-review.json` from `REVIEW.md`. Keep source evidence and icon provenance in the model. The assembled HTML embeds icons and diagrams; it must open without network access. Use a new output directory or explicit filenames to avoid overwriting unrelated work. The assembler refuses existing output files; remove only stale artifacts from your own run or choose a fresh directory.
 
 ## Canonical model
 
@@ -12,7 +12,7 @@ The JSON schema is version 1. Representative component and flow fields follow; t
 {
   "schema": 1,
   "title": "Event processing reference architecture",
-  "status": "review-ready",
+  "status": "needs-decision",
   "basis": "Proposed design from plans/events.md, revision 3, sections 2–4",
   "brand": "Approved project palette, light print variant",
   "nodes": [
@@ -74,10 +74,16 @@ First run press with `--html-only --palette <approved-palette.md>`. Then run `sc
 
 The assembler adds a diagram index, full-size diagram plates, generated flow tables, and platform coverage. Screen presentation retains the selected palette. Print uses white paper and neutral dark ink instead of extending screen background panels across mixed page sizes; accents, type, diagrams, and restrained table fills carry the brand. This print adaptation is explicit, not full dark-theme fidelity. Its receipt includes file sizes and SHA-256 hashes. It prints `visual_review: required`: the author must perform and record that review separately. PDF bytes can differ across Chromium versions and runs; only the HTML assembly is deterministic for identical inputs.
 
-In `verification.md`, record input revision, brand and any exceptions, icon package hash and source, tool versions, commands and decisive output, pages and views inspected, contrast/layout findings, numbered-flow agreement, screenshots, and limitations. Check PDF dimensions and searchability with a PDF inspection tool. List each required file and its hash. Do not claim PDF/UA, accessibility certification, or tested disaster recovery without appropriate evidence.
+In `verification.md`, record input revision, brand and any exceptions, icon package hash and source, tool versions, commands and decisive output, pages and views inspected, contrast/layout findings, numbered-flow agreement, screenshots, and limitations. Check PDF dimensions and searchability with a PDF inspection tool. List required artifacts and reference their hashes in the detached `SHA256SUMS` manifest; never put a file's own hash inside itself. Do not claim PDF/UA, accessibility certification, or tested disaster recovery without appropriate evidence.
+
+Include three distinct results: structural/export checks, semantic contract review, and rendered visual inspection. For semantics, record the applicable `METHOD.md` checks, current configuration/placement consistency, and unresolved contradictions. For visuals, record effective icon sizes after scaling, multi-digit list-marker checks, dense-region inspections and any artifact-local export workaround. An unexplained workaround is not a portable fix. If feedback was supplied, include the finding register and source-backed dispositions; do not erase a negative judgment after a repair. These are receipt requirements, not new schema fields or claims that the assembler measures visual geometry.
 
 Final status:
 
-- `review-ready`: requested files exist; technical, structural, and visual checks passed; no unmarked unknowns. This requests human review, not deployment approval.
-- `needs-decision`: consequential questions remain. The pack names them and remains a draft.
-- `incomplete`: a required file, official asset, or verification step is missing or failed.
+- `review-ready`: requested files exist; technical, structural, visual and independent judgment checks passed; no unmarked unknowns. This requests human review, not deployment approval.
+- `needs-decision`: consequential questions remain or the completed independent judgment is `revise`. The pack names them and remains a draft.
+- `incomplete`: a required file, official asset, or verification step is missing or failed, including a blocked independent judgment.
+
+The assembler does not run an LLM or enforce this semantic gate. The host executes `REVIEW.md` and validates its receipt before setting final status. The model's `status`, printed in HTML/PDF, is the **export-time status**, not the final review disposition. Before export, label it that way in the narrative and point to `verification.md` and `quality-review.json` for the authoritative final status and verdict. Start an unreviewed export as `needs-decision` or `incomplete`, never `review-ready`. State any difference explicitly in the final receipt; do not present two competing current statuses.
+
+Finalize in this order: export and freeze the model, narrative, SVGs, HTML and PDF; obtain the judgment bound to those input hashes; write `verification.md` with final status and the judgment filename; then generate detached `SHA256SUMS` covering all delivered artifacts, the judgment and verification receipt, excluding the manifest itself. Neither the judgment nor the receipt contains its own hash or the final manifest's hash. A repair creates a new reviewed version; do not change frozen export bytes just to relabel their status. This order also applies to the supplied artifacts of a skill-patch review, without requiring nonexistent architecture files.
