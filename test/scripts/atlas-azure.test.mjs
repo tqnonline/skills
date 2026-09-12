@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { root } from '../helpers.mjs';
 
-const script = join(root, 'skills/branding/atlas-azure/scripts/assemble.py');
+const script = join(root, 'skills/developer/atlas/providers/azure/scripts/assemble.py');
 const areas = ['billing-tenant', 'identity-access', 'resource-organization', 'network-connectivity', 'security', 'management', 'governance', 'platform-automation'];
 const platformHeadings = ['Landing zone and platform foundation', 'Network topology and connectivity', 'Governance and platform handoff'];
 const icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 0H16V16H0Z"/></svg>';

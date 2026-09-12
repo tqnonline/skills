@@ -63,7 +63,7 @@ When judge feedback is supplied, keep a finding register with source location, s
 
 ## Composition and portability
 
-This skill owns evidence extraction, the architecture model, SVG composition, and pack assembly. It can consume a repository brief, architecture decision record, or approved plan from any upstream workflow; it does not require another group's installation or impose a software delivery lifecycle gate.
+This skill owns evidence extraction, the architecture model, SVG composition, and pack assembly. Source analysis can consume a repository brief, architecture decision record, or approved plan without installing an upstream workflow skill or imposing a software delivery lifecycle gate. Document rendering requires branding `press`, under the narrow exception in ADR 0011.
 
 The requested theme owns identity selection; `branding-system` owns its tokens and accessibility rules. `press` owns deterministic narrative rendering and does not decide approval. The assembler owns diagram sheets and flow tables, so the narrative must point readers to those tables rather than maintain a second copy of the numbered workflow.
 

@@ -38,7 +38,7 @@ function artifactFixture(dir) {
 function judgmentFixture(stage) {
   return { stage, reviewer: { runtime: 'synthetic-test-reviewer' }, independent: true,
     inspected: [{ path: 'reference-architecture.pdf', pages: [1] }, { path: 'platform.svg' }, { path: 'workload.svg' }],
-    personas: personas.map(id => ({ id, scores: { clarity: 3, complexity: 3, understandability: 3 }, evidence: [{ path: 'workload.svg', location: 'app', observation: 'Synthetic evidence for controller tests, not an actual judgment.' }], strengths: [], findings: [] })),
+    personas: personas.map(id => ({ id, scores: { clarity: 4, complexity: 4, understandability: 4 }, evidence: [{ path: 'workload.svg', location: 'app', observation: 'Synthetic evidence for controller tests, not an actual judgment.' }], strengths: [], findings: [] })),
     requirementChecks: Array.from({ length: stage }, (_, i) => ({ id: `S${i + 1}-A1`, status: 'met', evidence: 'Synthetic requirement evidence.' })), regressionFindings: [], verdict: 'pass' };
 }
 
@@ -84,7 +84,17 @@ function setup() {
 test('init pins inputs and reveal does not expose a future stage', () => {
   const x = setup();
   try {
+    const manifest = JSON.parse(readFileSync(join(x.dir, 'run/run.json')));
+    assert.ok(manifest.atlas.sourceHashes['SKILL.md']);
+    for (const provider of ['azure', 'aws', 'gcp']) {
+      assert.ok(manifest.atlas.sourceHashes[`providers/${provider}/GUIDE.md`]);
+      assert.ok(manifest.atlas.sourceHashes[`providers/${provider}/scripts/assemble.py`]);
+    }
     assert.equal(run(x.dir, 'reveal').status, 0);
+    const prompt = readFileSync(join(x.dir, 'run/stages/01/author-prompt.md'), 'utf8');
+    assert.match(prompt, /Invoke Atlas \(atlas\)/);
+    assert.match(prompt, /Which cloud platform should this architecture target: Azure, AWS, or GCP\?/);
+    assert.match(prompt, /wait for explicit AWS confirmation before loading/);
     const input = readFileSync(join(x.dir, 'run/stages/01/input.md'), 'utf8');
     assert.match(input, /Requirement 1/);
     assert.doesNotMatch(input, /Requirement 2/);
@@ -168,7 +178,7 @@ test('record-judgment validates exact coverage and derives pass eligibility', ()
     const judgment = {
       stage: 1, reviewer: { runtime: 'independent-thread-1' }, independent: true,
       inspected: [{ path: 'reference-architecture.pdf', pages: [1] }, { path: 'view.svg' }],
-      personas: personas.map(id => ({ id, scores: { clarity: 3, complexity: 3, understandability: 3 }, evidence: [{ path: 'view.svg', location: 'node A', observation: 'The labeled node identifies its role.' }], strengths: ['Labels are explicit.'], findings: [] })),
+      personas: personas.map(id => ({ id, scores: { clarity: 4, complexity: 4, understandability: 4 }, evidence: [{ path: 'view.svg', location: 'node A', observation: 'The labeled node identifies its role.' }], strengths: ['Labels are explicit.'], findings: [] })),
       requirementChecks: [{ id: 'S1-A1', status: 'met', evidence: 'reference-architecture.pdf page 1 states the accepted behavior.' }],
       regressionFindings: [], verdict: 'blocked'
     };
@@ -311,6 +321,55 @@ test('five stages freeze valid artifacts and record failure without turning it i
     assert.match(markdown, /overview\/frozen\/integrated-overview.pdf/);
   } finally { x.cleanup(); }
 });
+
+for (const [name, mutate, eligible, result] of [
+  ['all twelve scores are 4', () => {}, true, 'pass'],
+  ['one score is 3 among eleven 4s', j => { j.personas[3].scores.understandability = 3; }, false, 'revise'],
+  ['minor regression', j => { j.regressionFindings.push('Minor: a previously defined acronym lost its expansion.'); }, false, 'revise'],
+  ['valid revise with low score and regression', j => { j.verdict = 'revise'; j.personas[0].scores.clarity = 3; j.regressionFindings.push('Minor: lost label.'); }, false, 'revise'],
+  ['eligible revise stays revise', j => { j.verdict = 'revise'; }, true, 'revise'],
+]) {
+  for (const overview of [false, true]) test(`strict4 ${overview ? 'overview' : 'stage'} gate: ${name}`, () => {
+    const x = setup();
+    try {
+      const artifacts = join(x.dir, 'artifacts'); artifactFixture(artifacts);
+      for (let stage = 1; stage <= (overview ? 5 : 1); stage++) {
+        assert.equal(run(x.dir, 'reveal').status, 0);
+        const freeze = run(x.dir, 'freeze', ['--artifacts', artifacts]);
+        assert.equal(freeze.status, 0, freeze.stderr);
+        if (!overview) break;
+        const file = join(x.dir, 'prior.json'); writeFileSync(file, JSON.stringify(judgmentFixture(stage)));
+        const record = run(x.dir, 'record-judgment', ['--judgment', file]);
+        assert.equal(record.status, 0, record.stderr);
+      }
+      const judgment = judgmentFixture(1);
+      if (overview) {
+        assert.equal(run(x.dir, 'overview-reveal').status, 0);
+        const dir = join(x.dir, 'overview-artifacts');
+        overviewArtifacts(dir, join(x.dir, 'run/stages/05/frozen/architecture.json'));
+        const freeze = run(x.dir, 'overview-freeze', ['--artifacts', dir]);
+        assert.equal(freeze.status, 0, freeze.stderr);
+        judgment.stage = 'overview';
+        judgment.inspected = [{ path: 'integrated-overview.pdf', pages: [1] }, { path: 'integrated-overview.svg' }];
+        for (const persona of judgment.personas) persona.evidence[0].path = 'integrated-overview.svg';
+        judgment.requirementChecks = ['O1-A1', 'O1-A2', 'O1-A3', 'O1-A4'].map(id => ({ id, status: 'met', evidence: 'Synthetic evidence.' }));
+      }
+      for (const persona of judgment.personas) persona.scores = { clarity: 4, complexity: 4, understandability: 4 };
+      mutate(judgment);
+      const file = join(x.dir, 'judgment.json'); writeFileSync(file, JSON.stringify(judgment));
+      const record = run(x.dir, overview ? 'overview-record-judgment' : 'record-judgment', ['--judgment', file]);
+      assert.equal(record.status, 0, record.stderr);
+      assert.equal(run(x.dir, 'report').status, 0);
+      const report = JSON.parse(readFileSync(join(x.dir, 'run/report.json')));
+      const receipt = overview ? report.overview : report.stages[0];
+      assert.equal(receipt.passEligible, eligible);
+      assert.equal(receipt.result, result);
+      const raw = readFileSync(join(x.dir, overview ? 'run/overview/raw-judgment.json' : 'run/stages/01/raw-judgment.json'), 'utf8');
+      assert.deepEqual(JSON.parse(raw), judgment);
+      if (!overview) assert.equal(run(x.dir, 'reveal').status, 0, 'valid negative receipts permit progression');
+    } finally { x.cleanup(); }
+  });
+}
 
 for (const [name, mutate] of [
   ['missing persona', j => j.personas.pop()],

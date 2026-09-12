@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { root } from '../helpers.mjs';
 
-const script = join(root, 'drafts/branding/atlas-gcp/scripts/assemble.py');
+const script = join(root, 'skills/developer/atlas/providers/gcp/scripts/assemble.py');
 const areas = ['organization-billing', 'identity-access', 'resource-organization', 'network-connectivity', 'security', 'management', 'governance', 'platform-automation'];
 const platformHeadings = ['Landing zone and platform foundation', 'Network topology and connectivity', 'Governance and platform handoff'];
 const icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><defs><style>.cls-1 { fill: #4285f4; stroke: none; }</style></defs><path class="cls-1" d="M0 0H16V16H0Z"/></svg>';
@@ -221,7 +221,7 @@ test('integrated CUSTOM PDF has the final large-format page at native print scal
 });
 
 function python(code) {
-  return spawnSync('python3', ['-B', '-c', `import sys\nsys.path.insert(0, ${JSON.stringify(join(root, 'drafts/branding/atlas-gcp/scripts'))})\n${code}`], { encoding: 'utf8' });
+  return spawnSync('python3', ['-B', '-c', `import sys\nsys.path.insert(0, ${JSON.stringify(join(root, 'skills/developer/atlas/providers/gcp/scripts'))})\n${code}`], { encoding: 'utf8' });
 }
 
 test('inert embedded icon CSS passes without rewriting original bytes', () => {

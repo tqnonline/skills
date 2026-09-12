@@ -1,9 +1,9 @@
 ---
-layout: skill
-name: atlas-azure
-title: "Atlas Azure: Reference Architectures From Repositories and Plans"
+layout: page
+permalink: /atlas/azure/
+title: "Atlas Provider Guide: Azure"
 description: "Atlas Azure turns a repository or clear plan into an evidence-labeled architecture model, official-icon diagrams, reference prose, and branded HTML and PDF artifacts."
-group: branding
+group: developer
 invocation: user-invoked
 scenario: "Documenting the proposed Azure architecture for QuenServe epic E1 without presenting unverified services or flows as deployed facts"
 lens:
@@ -21,9 +21,13 @@ lens:
     value: 'The pack distinguishes evidence from recommendation, presents unresolved decisions plainly, and uses a consistent brand without implying Microsoft endorsement.'
 ---
 
+[Atlas overview and invocation]({{ '/atlas/' | relative_url }}) · [AWS]({{ '/atlas/aws/' | relative_url }}) · [GCP]({{ '/atlas/gcp/' | relative_url }})
+
+This is the Azure guide within the single `atlas` skill, not a separately installed skill. Invoke `/atlas` or name `atlas` in a plain request. The source entry for this provider is [`providers/azure/GUIDE.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/azure/GUIDE.md). Atlas requires `press` and does not deploy cloud resources.
+
 ## What it does
 
-Atlas Azure takes a repository or a clear architecture plan and authors a reference-architecture pack. It can analyze code, infrastructure files, configuration, and existing architecture briefs without relying on a developer-group skill. It does not impose a software delivery life cycle or require an architecture gate.
+Atlas Azure takes a repository or a clear architecture plan and authors a reference-architecture pack. It can analyze code, infrastructure files, configuration, and existing architecture briefs without requiring another developer skill. It does not impose a software delivery life cycle or require an architecture gate.
 
 The pack has one source model, `architecture.json`. That model lists components, numbered flows, and views. Each material item carries an evidence status: `observed` for facts supported by the supplied source, `proposed` for recommendations, and `unknown` for points the source cannot settle. The skill also writes `reference-architecture.md`, A4 and A3 SVG diagrams built with official Azure icons, and branded, self-contained HTML and PDF artifacts.
 
@@ -43,11 +47,11 @@ The pack has one source model, `architecture.json`. That model lists components,
   <li>The final document follows the user's theme or established project design. A neutral Microsoft-inspired layout remains a layout choice and does not imply Microsoft endorsement.</li>
 </ul>
 
-- [`METHOD.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-azure/METHOD.md) explains source analysis, evidence labels, and the limited question rule.
-- [`LANDING-ZONES.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-azure/LANDING-ZONES.md) defines mandatory platform investigation: billing and tenant scope, identity, resource organization, networking, security, management, governance, and automation. Every area needs evidence, an owner, a decision, and a verification plan.
-- [`DIAGRAMS.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-azure/DIAGRAMS.md) defines official-icon use, view design, flow numbering, and A4 and A3 composition.
-- [`SOURCES.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-azure/SOURCES.md) records how to cite repositories, plans, briefs, and Microsoft source material.
-- [`OUTPUT.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-azure/OUTPUT.md) defines the files, validation checks, assembly order, and visual inspection record.
+- [`METHOD.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/azure/METHOD.md) explains source analysis, evidence labels, and the limited question rule.
+- [`LANDING-ZONES.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/azure/LANDING-ZONES.md) defines mandatory platform investigation: billing and tenant scope, identity, resource organization, networking, security, management, governance, and automation. Every area needs evidence, an owner, a decision, and a verification plan.
+- [`DIAGRAMS.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/azure/DIAGRAMS.md) defines official-icon use, view design, flow numbering, and A4 and A3 composition.
+- [`SOURCES.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/azure/SOURCES.md) records how to cite repositories, plans, briefs, and Microsoft source material.
+- [`OUTPUT.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/azure/OUTPUT.md) defines the files, validation checks, assembly order, and visual inspection record.
 
 The skill reuses a named theme skill or an established project design through `branding-system`. It uses `press` for prose rendering because press already handles Markdown, branding, and self-contained output. Press cannot embed images, so `scripts/assemble.py` validates `architecture.json` and the SVG files, then adds diagram plates and canonical numbered flow tables to the press HTML. Node 20 runs press. Python 3 runs assembly. Chromium can print the assembled page to PDF.
 
@@ -55,7 +59,9 @@ The assembler rejects an application-only pack: both platform and workload views
 
 ## When to reach for it
 
-Type `/atlas-azure` in Claude Code, or name the skill directly in a session. The skill is user-invoked. Nothing starts it automatically.
+Type `/atlas` in Claude Code, or name `atlas` directly in a session. The skill is user-invoked. Nothing starts it automatically.
+
+Every run first asks, “Which cloud platform should this architecture target: Azure, AWS, or GCP?” It waits for the answer and never infers Azure from the skill name or repository. If the user named Azure earlier, the run still asks for explicit confirmation before continuing.
 
 Use it when an Azure design needs a durable reference pack rather than a diagram alone. The input can be an existing repository, a clear proposed plan, or an architecture brief produced elsewhere. If no theme or established project design exists, the skill asks for one concise preference rather than inventing a house brand.
 
@@ -64,7 +70,7 @@ Use it when an Azure design needs a durable reference pack rather than a diagram
 | You need a branded document from approved prose and no embedded diagrams | [`press`]({{ '/press/' | relative_url }}) |
 | You need a coherent visual and verbal system before applying it to the architecture pack | [`branding-system`]({{ '/branding-system/' | relative_url }}) |
 | You need an explorable interactive explanation rather than a printable reference architecture | [`exhibit`]({{ '/exhibit/' | relative_url }}) |
-| You need an Azure reference pack with an evidence-labeled model, diagrams, flows, prose, HTML, and PDF | `atlas-azure` |
+| You need an Azure reference pack with an evidence-labeled model, diagrams, flows, prose, HTML, and PDF | `atlas`, then confirm Azure |
 
 Install once, and every tool below reaches the same skill:
 
@@ -77,8 +83,8 @@ The workflow needs Node 20 and Python 3.9 or newer. PDF output also needs Chromi
 <div class="tool-group">
 <div class="tool-group-head"><span class="tool-badge">Claude Code</span><span class="tool-group-mechanism">Slash command</span></div>
 <div class="tool-group-body">
-<p>Type <code>/atlas-azure</code> and point it at the repository or plan. Name the theme when one exists. The skill inspects source evidence, limits questions to costly unknowns, authors the pack, runs the local checks, and opens the SVG and PDF for visual review.</p>
-<div class="prompt-card">/atlas-azure Document QuenServe's E1 offline-sync architecture from this repository. Use our established project design. Mark every material point observed, proposed, or unknown. Keep the mobile conflict and status flows numbered across the model, diagrams, and tables. Ask only if an unresolved Azure choice would materially change cost or risk.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
+<p>Type <code>/atlas</code> and point it at the repository or plan. Answer the mandatory platform question. Name the theme when one exists. The skill inspects source evidence, limits later questions to costly unknowns, authors the pack, runs the local checks, and opens the SVG and PDF for visual review.</p>
+<div class="prompt-card">/atlas Document QuenServe's E1 offline-sync architecture from this repository. Ask the platform question and wait for confirmation. Use our established project design. Mark every material point observed, proposed, or unknown. Keep the mobile conflict and status flows numbered across the model, diagrams, and tables. Ask further questions only if an unresolved Azure choice would materially change cost or risk.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
 </div>
 </div>
 
@@ -86,19 +92,19 @@ The workflow needs Node 20 and Python 3.9 or newer. PDF output also needs Chromi
 <div class="tool-group-head"><span class="tool-badge">OpenCode</span><span class="tool-group-mechanism">Shared skill, plain ask</span></div>
 <div class="tool-group-body">
 <p>Name the installed skill and the source path. OpenCode reads the same contract and runs press with Node 20, assembly with Python 3, and Chromium when PDF output is requested and available.</p>
-<div class="prompt-card">Use atlas-azure on plans/quenserve-e1.md. Produce architecture.json, reference-architecture.md, official-icon A4 and A3 SVG views, and branded HTML and PDF. Label assumptions as proposed or unknown, and inspect the SVG and PDF before reporting completion.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
+<div class="prompt-card">Use atlas on plans/quenserve-e1.md. Ask the platform question and wait. After Azure confirmation, produce architecture.json, reference-architecture.md, official-icon A4 and A3 SVG views, and branded HTML and PDF. Label assumptions as proposed or unknown, and inspect the SVG and PDF before reporting completion.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
 </div>
 </div>
 
 <div class="tool-group">
 <div class="tool-group-head"><span class="tool-badge">Cursor</span><span class="tool-badge">Codex</span><span class="tool-badge">GitHub Copilot</span><span class="tool-group-mechanism">Catalog readers &mdash; shared catalog, plain ask</span></div>
 <div class="tool-group-body">
-<p>All three read the same installed catalog and apply <code>skills/branding/atlas-azure/SKILL.md</code> as context. They need no developer-group workflow. Ask them to report which claims came from source evidence and which remain design proposals.</p>
-<div class="prompt-card">Read skills/branding/atlas-azure/SKILL.md and document QuenServe E1 from the repository. Use the named theme, keep one canonical set of numbered flows, run scripts/assemble.py, print with Chromium if available, and report visual inspection separately from consistency checks.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
+<p>All three read the same installed catalog and apply <code>skills/developer/atlas/SKILL.md</code> as context. They need no other developer workflow. Ask them to report which claims came from source evidence and which remain design proposals.</p>
+<div class="prompt-card">Read skills/developer/atlas/SKILL.md and document QuenServe E1 from the repository. Ask the platform question and wait. After Azure confirmation, use the named theme, keep one canonical set of numbered flows, run the Azure provider's scripts/assemble.py, print with Chromium if available, and report visual inspection separately from consistency checks.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
 </div>
 </div>
 
-In Amp, name `atlas-azure` in the request and supply the repository or plan. Amp loads the shared skill, uses its native search tools for evidence, and runs the same local validation and rendering scripts. No separate architecture agent or cloud credentials are required.
+In Amp, name `atlas` in the request and supply the repository or plan, then confirm Azure when asked. Amp loads the shared skill, uses its native search tools for evidence, and runs the same local validation and rendering scripts. No separate architecture agent or cloud credentials are required.
 
 A good ask includes:
 
@@ -112,7 +118,7 @@ A good ask includes:
 
 For [QuenServe]({{ '/example/' | relative_url }}) and its E1 offline inspection sync, an ask could read:
 
-<pre><code>Document QuenServe's E1 offline-sync architecture from this repository. Use our established project design. Mark every material point observed, proposed, or unknown. Keep the mobile conflict and status flows numbered across architecture.json, the diagrams, and the flow tables. Produce A4 and A3 SVG views, reference-architecture.md, and self-contained HTML and PDF. Ask only if an unresolved Azure choice would materially change cost or risk.</code></pre>
+<pre><code>Use atlas to document QuenServe's E1 offline-sync architecture from this repository. Ask the mandatory platform question and wait for confirmation. Use our established project design. Mark every material point observed, proposed, or unknown. Keep the mobile conflict and status flows numbered across architecture.json, the diagrams, and the flow tables. Produce A4 and A3 SVG views, reference-architecture.md, and self-contained HTML and PDF. Ask further questions only if an unresolved Azure choice would materially change cost or risk.</code></pre>
 
 This is a worked scenario, not a record of a live run. The [QuenServe example]({{ '/example/' | relative_url }}) establishes that inspectors work offline, attach photos and measurements, sync without loss, surface conflicts, and need sync status. It does not establish a deployed Azure service inventory. The pack must therefore preserve a distinction like this:
 
@@ -124,7 +130,7 @@ This is a worked scenario, not a record of a live run. The [QuenServe example]({
 
 The model would give each component a stable identifier and each interaction a number. For example, flow 1 can describe the device submitting a queued inspection, flow 2 can describe durable acceptance, and flow 3 can describe conflict evaluation. Those numbers are illustrative until the source analysis fixes the actual sequence. Once fixed, the same wording and endpoints must appear in `architecture.json`, every relevant SVG, and the HTML flow table.
 
-The workflow then renders `reference-architecture.md` with press, runs `python3 skills/branding/atlas-azure/scripts/assemble.py` to validate and assemble the pack, and optionally prints it with Chromium. No checksum, page count, command output, or validation result is claimed here because this page does not have a checked QuenServe fixture or a recorded run.
+The workflow then renders `reference-architecture.md` with required press, runs `python3 skills/developer/atlas/providers/azure/scripts/assemble.py` to validate and assemble the pack, and prints it with Chromium when available. Missing PDF capability is reported as incomplete output. No checksum, page count, command output, or validation result is claimed here because this page does not have a checked QuenServe fixture or a recorded run.
 
 ## What good looks like
 
@@ -174,7 +180,7 @@ Press does not embed images. It remains responsible for rendering the reference 
 <summary>Can the skill work from an architecture brief instead of source code?</summary>
 <div class="qa-body">
 
-Yes. A clear plan or existing brief is valid input. The skill cites that material and labels its statements according to what the brief supports. It does not require a developer-group reconnaissance step or another group's artifact.
+Yes. A clear plan or existing brief is valid input. The skill cites that material and labels its statements according to what the brief supports. It does not require a developer-group reconnaissance step.
 
 </div>
 </details>
@@ -219,6 +225,6 @@ If a proposed service appears as an observed deployment, or a flow number means 
 
 ## Where it fits
 
-Atlas Azure is a user-invoked branding-group skill. It owns the architecture pack from source reading through visual inspection. It is self-contained for code analysis and can also consume a plan or existing architecture brief. It does not install software, push changes, invoke developer skills, or add delivery gates.
+Azure is an internal provider guide within the user-invoked developer-group `atlas` skill. Atlas owns the architecture pack from source reading through visual inspection. It is self-contained for code analysis and can also consume a plan or existing architecture brief. It does not install software, push changes, or add delivery gates.
 
-The theme skills and `branding-system` supply the visual system. `press` renders the prose into branded HTML but does not embed the diagrams. `atlas-azure` then validates and assembles the diagram plates and numbered flow tables, and Chromium optionally prints the final PDF. This division keeps each tool's limits visible while producing one coherent reference pack.
+The narrow group-independence exception permits the required branding `press` dependency. A theme and `branding-system` are optional and apply only when the user selects them. `press` renders the prose into branded HTML but does not embed the diagrams. Atlas then uses the Azure-local assembler for diagram plates and numbered flow tables, and Chromium prints the final PDF. This division keeps each tool's limits visible while producing one coherent reference pack. See the [Atlas migration instructions]({{ '/atlas/' | relative_url }}#when-to-reach-for-it) to remove retired installations; old commands are not aliases.

@@ -21,4 +21,4 @@ A skill in the developer group cites one of these documents by bare filename, fo
 
 These are the skills whose citations resolve here. Install any of them with `amp skill add tqnonline/skills/skills/developer/<skill>`, or the whole group with `amp skill add tqnonline/skills/skills/developer`.
 
-`architect`, `ask-fde`, `conduct`, `debug`, `deliver`, `glossary`, `impact`, `model-routing`, `operate`, `prototype`, `raise`, `recon`, `refactor`, `responsible-ai-governance`, `safeguard`, `sdlc`, `shakedown`, `slice`, `tdd`, `triage`, `update-models`, `wizard`
+`architect`, `ask-fde`, `atlas`, `conduct`, `debug`, `deliver`, `glossary`, `impact`, `model-routing`, `operate`, `prototype`, `raise`, `recon`, `refactor`, `responsible-ai-governance`, `safeguard`, `sdlc`, `shakedown`, `slice`, `tdd`, `triage`, `update-models`, `wizard`

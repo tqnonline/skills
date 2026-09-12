@@ -36,6 +36,7 @@ contract:
    - shallow modules, tangled boundaries, or "where should the seam go" → `refactor`
    - inconsistent naming, unclear jargon, or a shared language to settle → `glossary`
    - design → `architect`
+   - reference architecture documentation, cloud diagrams, or an architecture PDF → `atlas`; Atlas asks for explicit cloud confirmation before selecting its provider profile
    - security → `safeguard`
    - release → `deliver` + `shakedown`
    - production, reliability, quality, or maintenance → `operate`

@@ -2,7 +2,7 @@
 
 Fifteen skills that run software delivery on evidence instead of confidence: routing, orientation, a signed requirements document, a gated build loop, and release.
 
-Promoted skills: 22.
+Promoted skills: 23.
 
 Full documentation: https://tqnonline.github.io/skills/group/developer/
 

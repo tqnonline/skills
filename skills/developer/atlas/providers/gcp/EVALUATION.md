@@ -25,4 +25,4 @@ Report requirement coverage as numerator/denominator, artifact and visual defect
 
 ## Skill acceptance
 
-Run the focused assembler/assets/review/controller tests and `node scripts/run-tests.mjs`. Inspect representative real exports and obtain a separate skill-patch judgment against the change and experiment evidence. Do not erase preexisting failures or portray controller fixtures as live judgments. Keep the skill in drafts until evidence supports promotion; promotion also requires repository catalog, generated sidecars and documentation rules.
+Run the focused assembler/assets/review/controller tests and `node scripts/run-tests.mjs`. Inspect representative real exports and obtain a separate skill-patch judgment against the change and experiment evidence. Do not erase preexisting failures or portray controller fixtures as live judgments. The user approved catalog promotion; this approval does not establish live benchmark success. Maintain repository catalog, generated sidecars and documentation parity with the other promoted Atlas skills.

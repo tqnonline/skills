@@ -34,7 +34,7 @@ function artifactFixture(dir, integrated = false) {
 function judgmentFixture(stage, artifactHashes) {
   return { stage, reviewer: { runtime: 'synthetic-test-reviewer' }, independent: true, artifactHashes,
     inspected: [{ path: 'reference-architecture.pdf', pages: [1] }, { path: 'platform.svg' }, { path: 'workload.svg' }],
-    personas: personas.map(id => ({ id, scores: { clarity: 3, complexity: 3, understandability: 3 }, evidence: [{ path: 'workload.svg', location: 'app', observation: 'Synthetic evidence for controller tests, not an actual judgment.' }], strengths: [], findings: [] })),
+    personas: personas.map(id => ({ id, scores: { clarity: 4, complexity: 4, understandability: 4 }, evidence: [{ path: 'workload.svg', location: 'app', observation: 'Synthetic evidence for controller tests, not an actual judgment.' }], strengths: [], findings: [] })),
     requirementChecks: Array.from({ length: stage }, (_, i) => ({ id: `S${i + 1}-A1`, status: 'met', evidence: 'Synthetic requirement evidence.' })), regressionFindings: [], verdict: 'pass' };
 }
 
@@ -67,7 +67,17 @@ function setup() {
 test('init pins inputs and reveal does not expose a future stage', () => {
   const x = setup();
   try {
+    const manifest = JSON.parse(readFileSync(join(x.dir, 'run/run.json')));
+    assert.ok(manifest.atlas.sourceHashes['SKILL.md']);
+    for (const provider of ['azure', 'aws', 'gcp']) {
+      assert.ok(manifest.atlas.sourceHashes[`providers/${provider}/GUIDE.md`]);
+      assert.ok(manifest.atlas.sourceHashes[`providers/${provider}/scripts/assemble.py`]);
+    }
     assert.equal(run(x.dir, 'reveal').status, 0);
+    const prompt = readFileSync(join(x.dir, 'run/stages/01/author-prompt.md'), 'utf8');
+    assert.match(prompt, /Invoke Atlas \(atlas\)/);
+    assert.match(prompt, /Which cloud platform should this architecture target: Azure, AWS, or GCP\?/);
+    assert.match(prompt, /wait for explicit GCP confirmation before loading/);
     const input = readFileSync(join(x.dir, 'run/stages/01/input.md'), 'utf8');
     assert.match(input, /Requirement 1/);
     assert.doesNotMatch(input, /Requirement 2/);
@@ -156,7 +166,7 @@ test('record-judgment validates exact coverage and derives pass eligibility', ()
       stage: 1, reviewer: { runtime: 'independent-thread-1' }, independent: true,
       artifactHashes: hashes,
       inspected: [{ path: 'reference-architecture.pdf', pages: [1] }, { path: 'view.svg' }],
-      personas: personas.map(id => ({ id, scores: { clarity: 3, complexity: 3, understandability: 3 }, evidence: [{ path: 'view.svg', location: 'node A', observation: 'The labeled node identifies its role.' }], strengths: ['Labels are explicit.'], findings: [] })),
+      personas: personas.map(id => ({ id, scores: { clarity: 4, complexity: 4, understandability: 4 }, evidence: [{ path: 'view.svg', location: 'node A', observation: 'The labeled node identifies its role.' }], strengths: ['Labels are explicit.'], findings: [] })),
       requirementChecks: [{ id: 'S1-A1', status: 'met', evidence: 'reference-architecture.pdf page 1 states the accepted behavior.' }],
       regressionFindings: [], verdict: 'blocked'
     };
@@ -256,6 +266,38 @@ test('five stages freeze valid artifacts and record failure without turning it i
   } finally { x.cleanup(); }
 });
 
+const strictCases = [
+  ['all twelve scores are 4', () => {}, true, 'pass'],
+  ['one score is 3 among eleven 4s', j => { j.personas[3].scores.understandability = 3; }, false, 'revise'],
+  ['minor regression', j => { j.regressionFindings.push('Minor: a previously defined acronym lost its expansion.'); }, false, 'revise'],
+  ['valid revise with low score and regression', j => { j.verdict = 'revise'; j.personas[0].scores.clarity = 3; j.regressionFindings.push('Minor: lost label.'); }, false, 'revise'],
+  ['eligible revise stays revise', j => { j.verdict = 'revise'; }, true, 'revise'],
+];
+
+for (const [name, mutate, eligible, result] of strictCases) {
+  test(`strict4 stage gate: ${name}`, () => {
+    const x = setup();
+    try {
+      const artifacts = join(x.dir, 'artifacts'); artifactFixture(artifacts);
+      assert.equal(run(x.dir, 'reveal').status, 0);
+      const freeze = run(x.dir, 'freeze', ['--artifacts', artifacts]);
+      assert.equal(freeze.status, 0, freeze.stderr);
+      const judgment = judgmentFixture(1, frozenHashes(x.dir));
+      for (const persona of judgment.personas) persona.scores = { clarity: 4, complexity: 4, understandability: 4 };
+      mutate(judgment);
+      const file = join(x.dir, 'judgment.json'); writeFileSync(file, JSON.stringify(judgment));
+      const record = run(x.dir, 'record-judgment', ['--judgment', file]);
+      assert.equal(record.status, 0, record.stderr);
+      assert.equal(readFileSync(join(x.dir, 'run/stages/01/judgment.json'), 'utf8'), readFileSync(file, 'utf8'));
+      assert.equal(run(x.dir, 'report').status, 0);
+      const stage = JSON.parse(readFileSync(join(x.dir, 'run/report.json'))).stages[0];
+      assert.equal(stage.passEligible, eligible);
+      assert.equal(stage.result, result);
+      assert.equal(run(x.dir, 'reveal').status, 0, 'valid negative receipts permit progression');
+    } finally { x.cleanup(); }
+  });
+}
+
 for (const [name, mutate] of [
   ['missing artifact hashes', j => { delete j.artifactHashes; }],
   ['stale artifact hash', j => { j.artifactHashes['workload.svg'] = 'stale'; }],
@@ -288,7 +330,7 @@ for (const [name, mutate] of [
   });
 }
 
-test('final judgment uses the full schema, five overview checks, and exact frozen hashes', () => {
+for (const [name, mutate, eligible, result] of strictCases) test(`strict4 overview gate with full schema and exact hashes: ${name}`, () => {
   const x = setup();
   try {
     const manifestFile = join(x.dir, 'run/run.json');
@@ -297,8 +339,9 @@ test('final judgment uses the full schema, five overview checks, and exact froze
       const stage = join(x.dir, 'run/stages', String(id).padStart(2, '0'));
       mkdirSync(join(stage, 'frozen'), { recursive: true });
       writeFileSync(join(stage, 'frozen/source.svg'), `source-${id}`);
-      writeFileSync(join(stage, 'judgment.json'), '{}');
-      manifest.stages[id] = { revealed: true, frozen: true, judgment: true, hashes: { 'source.svg': createHash('sha256').update(`source-${id}`).digest('hex') }, judgmentHash: createHash('sha256').update('{}').digest('hex') };
+      const prior = JSON.stringify(judgmentFixture(id));
+      writeFileSync(join(stage, 'judgment.json'), prior);
+      manifest.stages[id] = { revealed: true, frozen: true, judgment: true, hashes: { 'source.svg': createHash('sha256').update(`source-${id}`).digest('hex') }, judgmentHash: createHash('sha256').update(prior).digest('hex') };
     }
     writeFileSync(manifestFile, JSON.stringify(manifest));
     assert.equal(run(x.dir, 'overview-reveal').status, 0);
@@ -314,8 +357,16 @@ test('final judgment uses the full schema, five overview checks, and exact froze
     assert.match(prompt, /Requirement 5|Prior frozen source packs|artifactHashes/);
     const judgment = { ...judgmentFixture(0, hashes), stage: 'final-overview', inspected: [{ path: 'reference-architecture.pdf', pages: [1] }, { path: 'integrated.svg' }], requirementChecks: Array.from({ length: 5 }, (_, i) => ({ id: `OVERVIEW-A${i + 1}`, status: 'met', evidence: 'Actual final PDF and SVG evidence.' })) };
     for (const persona of judgment.personas) persona.evidence[0].path = 'integrated.svg';
+    for (const persona of judgment.personas) persona.scores = { clarity: 4, complexity: 4, understandability: 4 };
+    mutate(judgment);
     const file = join(x.dir, 'final-judgment.json'); writeFileSync(file, JSON.stringify(judgment));
     assert.equal(run(x.dir, 'overview-record-judgment', ['--judgment', file]).status, 0);
+    const recorded = JSON.parse(readFileSync(manifestFile)).overview;
+    assert.equal(recorded.passEligible, eligible);
+    const report = run(x.dir, 'report');
+    assert.equal(report.status, 0, report.stderr);
+    assert.equal(JSON.parse(readFileSync(join(x.dir, 'run/report.json'))).finalOverview.result, result);
+    assert.equal(readFileSync(join(finalDir, 'judgment.json'), 'utf8'), readFileSync(file, 'utf8'));
     judgment.requirementChecks[4].status = 'accepted';
     writeFileSync(join(finalDir, 'judgment.json'), '{}');
     const current = JSON.parse(readFileSync(manifestFile)); delete current.overview.judgment; delete current.overview.judgmentHash; writeFileSync(manifestFile, JSON.stringify(current));

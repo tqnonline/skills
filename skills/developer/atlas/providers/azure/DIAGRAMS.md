@@ -2,6 +2,8 @@
 
 ## Page and layout rules
 
+New Atlas diagrams use exact 96 × 96-unit service-icon boxes under the common entry-point contract. The smaller sizes described below document legacy compatibility only; they are not authoring alternatives for new outputs.
+
 SVG means Scalable Vector Graphics: editable shapes and text that retain detail when enlarged. Deliver real vector paths and text, not a screenshot wrapped in SVG. Use a white or approved light print surface. Use the document brand for headings, boundary fills, connector roles, and callouts. Microsoft service artwork retains its original colors and proportions.
 
 Use these exact landscape dimensions for the primary architecture sheets:

@@ -1,6 +1,6 @@
-# Atlas Azure staged evaluation harness
+# Atlas staged evaluation harness: Azure
 
-This offline harness controls a five-stage evaluation of the `atlas-azure` skill. It does not generate an architecture and does not call a model. It reveals one cumulative task at a time, freezes the resulting files, records independent review receipts, and reports the run.
+This offline harness controls a five-stage evaluation of Atlas (`skills/developer/atlas`) with its Azure provider profile. It does not generate an architecture and does not call a model. It reveals one cumulative task at a time, freezes the resulting files, records independent review receipts, and reports the run.
 
 ## Quality bar and scenario
 
@@ -21,7 +21,7 @@ node test/eval/atlas-azure/run.mjs record-judgment --run /tmp/atlas-run --judgme
 node test/eval/atlas-azure/run.mjs report --run /tmp/atlas-run
 ```
 
-`init` accepts `--cases FILE` and `--rubric FILE`. Their defaults are the files beside this README. It refuses an existing run directory. The manifest records copies and hashes of both fixtures, the Git revision, and recursive hashes of the Atlas Azure skill source. Reveal and freeze refuse source drift; evaluate a changed skill in a new run.
+`init` accepts `--cases FILE` and `--rubric FILE`. Their defaults are the files beside this README. It refuses an existing run directory. The manifest records copies and hashes of both fixtures, the Git revision, and recursive hashes of the entire Atlas skill, including all three provider profiles. Reveal and freeze refuse source drift; evaluate a changed skill in a new run. This controller uses `providers/azure/scripts/assemble.py` within Atlas.
 
 `reveal` writes `input.md` and `author-prompt.md` under the current stage. The input contains only cumulative requirements and paths to frozen preceding outputs. The next stage stays unavailable until the current output has a freeze and a valid judgment. The orchestrator must give the author only the generated prompt and named files. The fixture copies remain in the run for audit purposes and contain future stages.
 
@@ -34,7 +34,7 @@ In Amp, the orchestrator runs the author and judge in native, separate threads. 
 ### Live orchestration protocol
 
 1. Keep the controller and all future fixtures out of the author's workspace. Start an isolated author orb at the pinned skill revision. Transfer only the revealed input and earlier architecture outputs through native file-transfer tools. Merely telling an author not to read adjacent future fixtures is not isolation.
-2. Invoke Atlas Azure, using the fixture's approved neutral review-draft style. Let the author perform its normal generation and self-inspection before freeze. Preserve warnings and failures. Do not modify the skill during a run.
+2. Invoke Atlas (`atlas`). The author must ask “Which cloud platform should this architecture target: Azure, AWS, or GCP?” and wait for explicit Azure confirmation before loading that provider profile. Use the fixture's approved neutral review-draft style. Let the author perform its normal generation and self-inspection before freeze. Preserve warnings and failures. Do not modify the skill during a run.
 3. Download the delivered archive, inspect its contents, and freeze the output with this controller. Save the author execution identity and transfer details alongside the run. Local artifact paths must be remapped explicitly when transferring between orbs.
 4. Start a new independent judge context for each stage. Transfer the generated judge prompt, this schema, the frozen artifact pack, and previous frozen packs for regression comparison. Do not provide the author's conversation or later requirements. Have the judge inspect the actual PDF and rendered SVGs, then return a JSON judgment with evidence.
 5. Record the judgment unchanged. A valid negative judgment permits the next reveal: this is an evaluation, not a loop that edits outputs until they pass. The original result remains frozen. Do not feed judge findings to the author during the baseline run; a later feedback-assisted run would be a separate experiment.
@@ -58,7 +58,7 @@ The judgment file has this shape:
   "personas": [
     {
       "id": "junior-developer",
-      "scores": { "clarity": 3, "complexity": 3, "understandability": 3 },
+      "scores": { "clarity": 4, "complexity": 4, "understandability": 4 },
       "evidence": [
         { "path": "reference-architecture.pdf", "location": "page 2, flow 1", "observation": "The flow states its protocol and identity boundary." }
       ],
@@ -80,7 +80,7 @@ The `personas` array must contain exactly `junior-developer`, `cto`, `enterprise
 
 Requirement checks must contain every cumulative acceptance ID exactly once. The harness assigns IDs by stage and acceptance-array position, such as `S1-A1`. Status is `met`, `partial`, or `unmet`. The receipt must also contain a string array for regressions and a `pass`, `revise`, or `blocked` verdict.
 
-The model's verdict is advisory. The harness derives `passEligible`. Eligibility requires every score to be at least 3, no critical or major finding, every requirement to be met, and no regression finding. The stored receipt records whether the submitted verdict agrees with that derivation. The report never upgrades a model's `blocked` or `revise` verdict to `pass`; a model's unsupported `pass` becomes `revise`.
+The model's verdict is advisory. The harness derives `passEligible`. Eligibility requires all 12 scores to be at least 4, no critical or major finding, every requirement to be met, and no regression finding, including minor regressions. A higher score cannot offset a score below 4. Record every regression in `regressionFindings`, regardless of severity. The stored receipt records whether the submitted verdict agrees with that derivation. The report never upgrades a model's `blocked` or `revise` verdict to `pass`; a model's unsupported `pass` becomes `revise`.
 
 `report` writes `report.json` and `report.md`, with persona scores, findings, requirement checks and links to the artifacts. Each stage is marked `complete`, `in-progress`, `skipped`, or `not-run`; normal sequential operation produces complete, in-progress, and not-run states, while skipped is reserved for a manifest that records a later stage without a prior reveal. `complete` describes execution, not architecture quality.
 
