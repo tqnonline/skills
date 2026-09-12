@@ -1,9 +1,9 @@
 ---
-layout: skill
-name: atlas-aws
-title: "Atlas AWS: Evidence-Grounded Reference Architectures"
+layout: page
+permalink: /atlas/aws/
+title: "Atlas Provider Guide: AWS"
 description: "Atlas AWS turns a repository or scoped plan into an evidence-labeled AWS architecture model, official-icon diagrams, reference prose, and a branded HTML and PDF review pack."
-group: branding
+group: developer
 invocation: user-invoked
 scenario: "Documenting a proposed AWS architecture for QuenServe without presenting unverified services, isolation, or recovery behavior as deployed facts"
 lens:
@@ -20,6 +20,10 @@ lens:
     who: 'You are reviewing an AWS investment whose account model, tenant isolation, operating capacity, and material uncertainty must remain visible.'
     value: 'The pack ties recommendations to evidence, names unknowns and alternatives, and uses a consistent review style without implying AWS endorsement.'
 ---
+
+[Atlas overview and invocation]({{ '/atlas/' | relative_url }}) · [Azure]({{ '/atlas/azure/' | relative_url }}) · [GCP]({{ '/atlas/gcp/' | relative_url }})
+
+This is the AWS guide within the single `atlas` skill, not a separately installed skill. Invoke `/atlas` or name `atlas` in a plain request. The source entry for this provider is [`providers/aws/GUIDE.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/aws/GUIDE.md). Atlas requires `press` and does not deploy cloud resources.
 
 ## What it does
 
@@ -45,12 +49,12 @@ The canonical `architecture.json` drives platform and workload SVGs, generated f
 
 The AWS-local Python assembler checks model shape, flow coverage, known-illegal managed-service subnet placement, inert SVG content, official-asset hashes, and exact page and icon sizes. It cannot prove architectural semantics, effective permissions, tenant isolation, security, recovery, performance, cost, or deployment state.
 
-- [`METHOD.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-aws/METHOD.md) defines the evidence and AWS reasoning gates.
-- [`LANDING-ZONES.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-aws/LANDING-ZONES.md) covers the eight required platform areas.
-- [`DIAGRAMS.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-aws/DIAGRAMS.md) defines boundaries, sheets, official icons, and exact 96 × 96 icon geometry.
-- [`SOURCES.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-aws/SOURCES.md) defines primary-source citation and asset provenance.
-- [`OUTPUT.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-aws/OUTPUT.md) defines the model and deliverables.
-- [`REVIEW.md`](https://github.com/tqnonline/skills/blob/main/skills/branding/atlas-aws/REVIEW.md) is the evaluator source for the independent judgment.
+- [`METHOD.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/aws/METHOD.md) defines the evidence and AWS reasoning gates.
+- [`LANDING-ZONES.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/aws/LANDING-ZONES.md) covers the eight required platform areas.
+- [`DIAGRAMS.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/aws/DIAGRAMS.md) defines boundaries, sheets, official icons, and exact 96 × 96 icon geometry.
+- [`SOURCES.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/aws/SOURCES.md) defines primary-source citation and asset provenance.
+- [`OUTPUT.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/aws/OUTPUT.md) defines the model and deliverables.
+- [`REVIEW.md`](https://github.com/tqnonline/skills/blob/main/skills/developer/atlas/providers/aws/REVIEW.md) is the evaluator source for the independent judgment.
 
 The review applies four perspectives: junior developer, chief technology officer, enterprise architect, and security architect. One independent reviewer applies all four perspectives; this is not four independent experts or proof of model diversity. The skill records only judgments actually performed and never fabricates scores or results.
 
@@ -58,12 +62,14 @@ The review applies four perspectives: junior developer, chief technology officer
 
 Use Atlas AWS when a repository or clear plan needs a durable AWS review pack rather than a diagram alone. It is user-invoked and does not provision AWS resources, execute deployments, test a live system, approve security or compliance, calculate a verified bill, or imply AWS authorship or endorsement.
 
+Every run first asks, “Which cloud platform should this architecture target: Azure, AWS, or GCP?” It waits for the answer and never infers AWS from the skill name or repository. If the user named AWS earlier, the run still asks for explicit confirmation before continuing.
+
 | The problem | The skill |
 |---|---|
 | Render approved prose without an architecture model or embedded diagrams | [`press`]({{ '/press/' | relative_url }}) |
 | Establish the visual and verbal system first | [`branding-system`]({{ '/branding-system/' | relative_url }}) |
 | Build an interactive explanation rather than a printable review pack | [`exhibit`]({{ '/exhibit/' | relative_url }}) |
-| Build an evidence-labeled AWS model, official-icon views, prose, HTML, PDF, and independent review receipt | `atlas-aws` |
+| Build an evidence-labeled AWS model, official-icon views, prose, HTML, PDF, and independent review receipt | `atlas`, then confirm AWS |
 
 Install once, and every tool below reaches the same skill:
 
@@ -76,16 +82,16 @@ The workflow needs Node 20 and Python 3.9 or newer. PDF output needs Chromium. S
 <div class="tool-group">
 <div class="tool-group-head"><span class="tool-badge">Claude Code</span><span class="tool-group-mechanism">Slash command</span></div>
 <div class="tool-group-body">
-<p>Type <code>/atlas-aws</code> and name the repository or plan, intended readers, requested sheets, and brand. The skill limits questions to consequential unknowns and keeps checks distinct from human review.</p>
-<div class="prompt-card">/atlas-aws Document QuenServe from this repository as a proposed AWS architecture. Use our established design, preserve observed/proposed/unknown labels, produce A4 and A3 detail views, and add one A1 integrated overview. Do not claim that QuenServe or any AWS resource was run.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
+<p>Type <code>/atlas</code> and name the repository or plan, intended readers, requested sheets, and brand. Answer the mandatory platform question. The skill limits later questions to consequential unknowns and keeps checks distinct from human review.</p>
+<div class="prompt-card">/atlas Document QuenServe from this repository as a proposed AWS architecture. Ask the platform question and wait for confirmation. Use our established design, preserve observed/proposed/unknown labels, produce A4 and A3 detail views, and add one A1 integrated overview. Do not claim that QuenServe or any AWS resource was run.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
 </div>
 </div>
 
 <div class="tool-group">
 <div class="tool-group-head"><span class="tool-badge">OpenCode</span><span class="tool-group-mechanism">Shared skill, plain ask</span></div>
 <div class="tool-group-body">
-<p>Name <code>atlas-aws</code> and the source path. Ask for the model, detailed views, HTML, PDF, verification receipt, and independent judgment rather than treating a successful assembler command as approval.</p>
-<div class="prompt-card">Use atlas-aws on plans/quenserve.md. Model account, Region, VPC, private DNS, identity, tenant, failure, recovery, and numbered flows. Preserve official icon bytes and exact 96 by 96 geometry on every requested sheet.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
+<p>Name <code>atlas</code> and the source path, then confirm AWS when asked. Ask for the model, detailed views, HTML, PDF, verification receipt, and independent judgment rather than treating a successful assembler command as approval.</p>
+<div class="prompt-card">Use atlas on plans/quenserve.md. After platform confirmation, model AWS account, Region, VPC, private DNS, identity, tenant, failure, recovery, and numbered flows. Preserve official icon bytes and exact 96 by 96 geometry on every requested sheet.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
 </div>
 </div>
 
@@ -93,11 +99,11 @@ The workflow needs Node 20 and Python 3.9 or newer. PDF output needs Chromium. S
 <div class="tool-group-head"><span class="tool-badge">Cursor</span><span class="tool-badge">Codex</span><span class="tool-badge">GitHub Copilot</span><span class="tool-group-mechanism">Catalog readers &mdash; shared catalog, plain ask</span></div>
 <div class="tool-group-body">
 <p>These tools read the same installed contract. Ask them to cite current AWS primary sources, state which claims are proposals, run the local assembler, inspect actual exports, and arrange a separate review context.</p>
-<div class="prompt-card">Read skills/branding/atlas-aws/SKILL.md and create the QuenServe architecture pack from the supplied source. Keep workforce and tenant identity separate, show managed services outside subnets even when reached through VPC endpoints, and report unknowns without inventing AWS runtime evidence.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
+<div class="prompt-card">Read skills/developer/atlas/SKILL.md and create the QuenServe architecture pack from the supplied source. Ask the platform question and wait. After AWS confirmation, keep workforce and tenant identity separate, show managed services outside subnets even when reached through VPC endpoints, and report unknowns without inventing AWS runtime evidence.<button type="button" class="prompt-card-copy" aria-label="Copy this prompt">Copy</button></div>
 </div>
 </div>
 
-In Amp, name `atlas-aws` and provide the repository or plan. Amp uses its native source-reading and web tools, then runs the same local scripts. Cloud credentials are not required because the skill documents evidence; it does not inspect or provision an account unless that evidence is explicitly supplied through an approved mechanism.
+In Amp, name `atlas` and provide the repository or plan, then confirm AWS when asked. Amp uses its native source-reading and web tools, then runs the same local scripts. Cloud credentials are not required because the skill documents supplied evidence. It does not inspect or provision an account.
 
 ## A working example
 
@@ -178,4 +184,4 @@ Yes, when requested. The integrated overview is an actual single-page A1 solutio
 
 ## Where it fits
 
-Atlas AWS is a user-invoked branding-group skill. It owns architecture-pack authoring and verification, not cloud deployment or approval. `branding-system` supplies a requested theme or the skill uses a neutral AWS orange-and-navy-on-white review style. `press` renders approved prose to HTML. The AWS-local assembler validates and adds diagrams and canonical tables, and Chromium creates the PDF. Human owners remain responsible for consequential architecture, security, compliance, cost, and deployment decisions.
+AWS is an internal provider guide within the user-invoked developer-group `atlas` skill. Atlas owns architecture-pack authoring and verification, not cloud deployment or approval. The narrow group-independence exception permits its required branding `press` dependency. A theme and `branding-system` are optional and apply only when the user selects them; otherwise, the AWS guide uses a neutral orange-and-navy-on-white review style. The AWS-local assembler validates and adds diagrams and canonical tables, and Chromium creates the PDF. Human owners remain responsible for consequential architecture, security, compliance, cost, and deployment decisions. See the [Atlas migration instructions]({{ '/atlas/' | relative_url }}#when-to-reach-for-it) to remove retired installations; old commands are not aliases.

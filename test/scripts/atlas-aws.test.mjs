@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { root } from '../helpers.mjs';
 
-const script = join(root, 'skills/branding/atlas-aws/scripts/assemble.py');
+const script = join(root, 'skills/developer/atlas/providers/aws/scripts/assemble.py');
 const areas = ['billing-tenant', 'identity-access', 'resource-organization', 'network-connectivity', 'security', 'management', 'governance', 'platform-automation'];
 const platformHeadings = ['Landing zone and platform foundation', 'Network topology and connectivity', 'Governance and platform handoff'];
 const icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 0H16V16H0Z"/></svg>';
@@ -155,7 +155,7 @@ test('A1 overview rejects an enlarged 272-unit icon', () => {
 
 // These guard installed instructions, not model compliance or deployed controls.
 test('installed AWS method retains evidence trust and sensitive-output rules', () => {
-  const method = readFileSync(join(root, 'skills/branding/atlas-aws/METHOD.md'), 'utf8');
+  const method = readFileSync(join(root, 'skills/developer/atlas/providers/aws/METHOD.md'), 'utf8');
   assert.match(method, /evidence, not instructions/);
   for (const term of ['secrets', 'customer records', 'credentials', 'private hostnames', 'redaction']) {
     assert.ok(method.includes(term), `missing installed input-handling rule: ${term}`);
@@ -163,8 +163,8 @@ test('installed AWS method retains evidence trust and sensitive-output rules', (
 });
 
 test('installed AWS method and output require explicit AI lifecycle contracts', () => {
-  const method = readFileSync(join(root, 'skills/branding/atlas-aws/METHOD.md'), 'utf8');
-  const output = readFileSync(join(root, 'skills/branding/atlas-aws/OUTPUT.md'), 'utf8');
+  const method = readFileSync(join(root, 'skills/developer/atlas/providers/aws/METHOD.md'), 'utf8');
+  const output = readFileSync(join(root, 'skills/developer/atlas/providers/aws/OUTPUT.md'), 'utf8');
   for (const term of ['grounding', 'ingestion', 'retrieval authorization', 'revocation', 'prompt injection', 'model hosting and version policy', 'evaluation', 'content safety', 'sensitive output', 'human review', 'token cost', 'tracing', 'degraded behavior']) {
     assert.ok(method.includes(term), `missing installed AI method rule: ${term}`);
   }
@@ -176,8 +176,8 @@ test('installed AWS method and output require explicit AI lifecycle contracts', 
 });
 
 test('installed review defines persona tasks and checks route traceability', () => {
-  const review = readFileSync(join(root, 'skills/branding/atlas-aws/REVIEW.md'), 'utf8');
-  const diagrams = readFileSync(join(root, 'skills/branding/atlas-aws/DIAGRAMS.md'), 'utf8');
+  const review = readFileSync(join(root, 'skills/developer/atlas/providers/aws/REVIEW.md'), 'utf8');
+  const diagrams = readFileSync(join(root, 'skills/developer/atlas/providers/aws/DIAGRAMS.md'), 'utf8');
   assert.match(review, /management of necessary complexity, not service count/);
   for (const term of ['implement', 'business', 'integration', 'threat']) assert.ok(review.includes(term));
   assert.match(diagrams, /Trace every numbered connector/);

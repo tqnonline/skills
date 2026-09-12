@@ -144,7 +144,37 @@ test('link-skills.sh installs one symlink per promoted skill, overwriting none',
 // that are neither — `scripts/`, `templates/`, `trackers/`, `specs/` — are not
 // references to a group and are ignored.
 const BACKTICKED_PATH = /`([a-z0-9][a-z0-9-]*)\/([A-Za-z0-9._/-]+\.(?:md|yml|mjs|json|sh))`/g;
-const REPOSITORY_PATH = /(?:^|[^A-Za-z0-9/._-])skills\/([a-z][a-z-]*)\//g;
+const REPOSITORY_PATH = /(?:^|[^A-Za-z0-9/._-])skills\/([a-z][a-z-]*)\/(?:([a-z][a-z-]*)(?=\/|\s|$|[`)]))?/g;
+
+function atlasBrandingException(source, target) {
+  return source === 'skills/developer/atlas'
+    && ['press', 'branding-system', 'ai-branding', 'catppuccin-branding', 'everforest-branding', 'gruvbox-branding', 'nord-branding', 'solarized-branding'].includes(target);
+}
+
+test('the Atlas branding exception excludes unrelated sources and targets', () => {
+  for (const target of ['press', 'branding-system', 'ai-branding', 'catppuccin-branding', 'everforest-branding', 'gruvbox-branding', 'nord-branding', 'solarized-branding']) {
+    assert.ok(atlasBrandingException('skills/developer/atlas', target));
+  }
+  for (const source of ['skills/developer/atlas-azure', 'skills/developer/atlas-aws', 'skills/developer/atlas-gcp', 'skills/developer/atlas-extra', 'skills/pm/atlas']) {
+    assert.ok(!atlasBrandingException(source, 'press'));
+  }
+  assert.ok(!atlasBrandingException('skills/developer/architect', 'press'));
+  assert.ok(!atlasBrandingException('skills/developer/atlas', 'exhibit'));
+  assert.ok(!atlasBrandingException('skills/core/research', 'press'));
+});
+
+test('declared skill dependencies obey group boundaries and the narrow Atlas exception', () => {
+  for (const skill of SKILLS) {
+    const dependencies = read(`${skill.rel}/SKILL.md`).match(/^requires:\s*(.+)$/m)?.[1]?.split(',') ?? [];
+    for (const raw of dependencies) {
+      const dependency = raw.trim();
+      const target = groupOfSkill(dependency);
+      assert.ok(target, `${skill.rel}: unknown dependency ${dependency}`);
+      assert.ok(target === skill.group || (target === 'core' && skill.group !== 'core')
+        || atlasBrandingException(skill.rel, dependency), `${skill.rel}: prohibited dependency ${dependency}`);
+    }
+  }
+});
 
 function groupOfSkill(name) {
   return SKILLS.find((skill) => skill.name === name)?.group;
@@ -167,6 +197,8 @@ function crossGroupReferences(relPath) {
       if (!target) continue;
       if (target === ownGroup) continue;
       if (target === 'core' && ownGroup !== 'core') continue;
+      const targetSkill = pattern === REPOSITORY_PATH ? match[2] : match[1];
+      if (target === 'branding' && atlasBrandingException(relPath.split('/').slice(0, 3).join('/'), targetSkill)) continue;
       found.push({ text: match[0].trim(), target });
     }
   }

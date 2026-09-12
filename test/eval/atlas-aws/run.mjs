@@ -11,8 +11,8 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '../../..');
-const SKILL = join(ROOT, 'skills/branding/atlas-aws');
-const ASSEMBLE = join(SKILL, 'scripts/assemble.py');
+const SKILL = join(ROOT, 'skills/developer/atlas');
+const ASSEMBLE = join(SKILL, 'providers/aws/scripts/assemble.py');
 const PERSONAS = ['junior-developer', 'cto', 'enterprise-architect', 'security-architect'];
 const DIMENSIONS = ['clarity', 'complexity', 'understandability'];
 const REQUIRED = ['architecture.json', 'reference-architecture.md', 'reference-architecture.html', 'reference-architecture.pdf', 'verification.md'];
@@ -137,7 +137,7 @@ if (o.command === 'init') {
     const priorPaths = cumulative.slice(0, -1).map(s => `- ${join(stageDir(o.run, s.id), 'frozen')}`).join('\n') || '- None';
     const input = [`# Atlas AWS evaluation stage ${id}: ${cases.stages[id - 1].title}`, '', '## Baseline', cases.baseline, '', AWS_CONTEXT, '', '## Cumulative requirements', ...cumulative.flatMap(s => [`### Stage ${s.id}: ${s.title}`, s.requirements, '', ...s.acceptance.map((a, i) => `- S${s.id}-A${i + 1}: ${a}`), '']), '## Available frozen preceding outputs', priorPaths, ''].join('\n');
     writeFileSync(join(dir, 'input.md'), input);
-    writeFileSync(join(dir, 'author-prompt.md'), `Produce the Atlas AWS architecture pack for stage ${id}. Read only input.md and the frozen preceding outputs listed there. Do not inspect the run fixtures because they contain future stages. Write artifacts to a separate output directory for the orchestrator to freeze.\n`);
+    writeFileSync(join(dir, 'author-prompt.md'), `Invoke Atlas (atlas) to produce the architecture pack for stage ${id}. Ask "Which cloud platform should this architecture target: Azure, AWS, or GCP?" and wait for explicit AWS confirmation before loading its provider profile. Read only input.md and the frozen preceding outputs listed there as task evidence. Do not inspect the run fixtures because they contain future stages. Write artifacts to a separate output directory for the orchestrator to freeze.\n`);
     m.stages[id] = { revealed: true, revealedAt: new Date().toISOString(), inputHash: sha(join(dir, 'input.md')) }; save(loaded.file, m);
     console.log(join(dir, 'author-prompt.md'));
   } else if (o.command === 'freeze') {
@@ -210,7 +210,7 @@ if (o.command === 'init') {
     if (errors.length) die(errors.join('; '));
     const raw = structuredClone(j);
     const findings = j.personas.flatMap(p => p.findings);
-    const passEligible = j.personas.every(p => DIMENSIONS.every(d => p.scores[d] >= 3)) && !findings.some(f => ['critical', 'major'].includes(f.severity)) && j.requirementChecks.every(c => c.status === 'met') && j.regressionFindings.length === 0;
+    const passEligible = j.personas.every(p => DIMENSIONS.every(d => p.scores[d] >= 4)) && !findings.some(f => ['critical', 'major'].includes(f.severity)) && j.requirementChecks.every(c => c.status === 'met') && j.regressionFindings.length === 0;
     j.derived = { passEligible, modelVerdictAgrees: (j.verdict === 'pass') === passEligible };
     save(rawDestination, raw);
     const rawJudgmentHash = sha(rawDestination);
@@ -224,7 +224,7 @@ if (o.command === 'init') {
     const model = join(stageDir(o.run, 5), 'frozen/architecture.json');
     const input = `# Atlas AWS final integrated overview\n\nUse the frozen Stage 5 canonical model at ${model}. Produce one integrated SVG named integrated-overview.svg and a separate, actual single-page A1 PDF named integrated-overview.pdf. Keep all detailed Stage 5 views unchanged and separate. The overview must map every Stage 5 node, subsystem (view ID), and flow ID in coverage.json; omit nothing silently. Show truthful AWS account, Region, network, identity, management, and customer boundaries. Every official icon is exactly 96 by 96 SVG sheet units on every paper size. Use the neutral AWS orange/navy on white review-draft style.\n`;
     writeFileSync(join(dir, 'input.md'), input);
-    writeFileSync(join(dir, 'author-prompt.md'), 'Produce only the final integrated overview artifacts described by input.md. Do not inspect fixtures or later controller commands. No model, API, or CLI is invoked by this controller.\n');
+    writeFileSync(join(dir, 'author-prompt.md'), 'Invoke Atlas (atlas). Ask "Which cloud platform should this architecture target: Azure, AWS, or GCP?" and wait for explicit AWS confirmation before loading its provider profile. Produce only the final integrated overview artifacts described by input.md. Do not inspect fixtures or later controller commands. No model, API, or CLI is invoked by this controller.\n');
     m.overview = { revealed: true, revealedAt: new Date().toISOString(), inputHash: sha(join(dir, 'input.md')) }; save(loaded.file, m);
     console.log(join(dir, 'author-prompt.md'));
   } else if (o.command === 'overview-freeze') {
@@ -293,7 +293,7 @@ if (o.command === 'init') {
     }
     const ids = ['O1-A1', 'O1-A2', 'O1-A3', 'O1-A4']; if (!sameSet(requirementEntries.map(x => x?.id), ids) || requirementEntries.some(x => !x || typeof x !== 'object' || !['met', 'partial', 'unmet'].includes(x.status) || !nonempty(x.evidence))) errors.push('overview requirement checks are invalid');
     if (!Array.isArray(j.regressionFindings) || !j.regressionFindings.every(nonempty) || !['pass', 'revise', 'blocked'].includes(j.verdict)) errors.push('regressions or verdict are invalid'); if (errors.length) die(errors.join('; '));
-    const findings = j.personas.flatMap(p => p.findings); const passEligible = j.personas.every(p => DIMENSIONS.every(d => p.scores[d] >= 3)) && !findings.some(f => ['critical', 'major'].includes(f.severity)) && j.requirementChecks.every(c => c.status === 'met') && j.regressionFindings.length === 0;
+    const findings = j.personas.flatMap(p => p.findings); const passEligible = j.personas.every(p => DIMENSIONS.every(d => p.scores[d] >= 4)) && !findings.some(f => ['critical', 'major'].includes(f.severity)) && j.requirementChecks.every(c => c.status === 'met') && j.regressionFindings.length === 0;
     save(rawDestination, j); state.rawJudgmentHash = sha(rawDestination);
     const receipt = structuredClone(j); receipt.derived = { passEligible, modelVerdictAgrees: (j.verdict === 'pass') === passEligible }; save(destination, receipt);
     Object.assign(state, { judgment: true, judgmentHash: sha(destination), passEligible, verdict: j.verdict }); save(loaded.file, m);

@@ -12,14 +12,14 @@ Every skill here, whatever its group, carries one philosophy: **Set the frontier
 
 ## Skill groups
 
-Six groups, each a bounded area of work rather than a technology layer. Each group installs on its own: any group may reference `core`, and no group references another, so adopting one never drags in the rest. All six groups are shipping, and every group has at least one promoted skill.
+Six groups contain 60 promoted skills. Each group covers a bounded area of work rather than a technology layer. Each group installs on its own and may reference `core`. Atlas has a narrow exception: its developer installation includes the required branding `press` renderer, with themes selected separately by the user. Other cross-group dependencies remain prohibited. All six groups are shipping, and every group has at least one promoted skill.
 
 | Group | What it is | Status |
 |-------|------------|--------|
 | **Core — shared doctrine** | The doctrine and tooling more than one group needs, belonging to no audience in particular: verification before completion, coverage, the grill round protocol, value probing, the run trace, and three skills — `grit`, `research`, and `retro`, the loop that reads the traces back. Every group may reference it; it references none of them. | Shipping |
-| **Developer — the AI-native SDLC** | The software delivery lifecycle rebuilt for humans plus trusted agents: inception, backlog, design, implementation, secure DevOps, reliability, and maintenance, plus the daily craft of test-first work, diagnosis, prototyping, deepening, shared language, issue triage, and human-step wizards — 22 skills. | Shipping |
+| **Developer — the AI-native SDLC** | The software delivery lifecycle rebuilt for humans plus trusted agents: inception, backlog, design, implementation, secure DevOps, reliability, and maintenance, plus the daily craft of test-first work, diagnosis, prototyping, deepening, shared language, issue triage, human-step wizards, and one Atlas skill for Azure, AWS, and GCP reference architecture packs — 23 skills. | Shipping |
 | **PM — the AI-native transformation practice** | The business side of the same AI-native transformation coin: discovery, TOM design, epic and PRD authoring, business cases grounded in cost including the agent fleet's own, roadmapping, RAID, benefits realization against a north star, and 4Ps leadership reporting, plus charting work too big for one session — 16 skills. | Shipping |
-| **Branding** | One shared verbal, visual, accessibility, physical, and motion system applied across product UI, documents, print, environmental work, and video. Six theme skills use open-source fonts and accessible light and dark roles; `press` renders approved documents, `exhibit` builds interactive explanations, and `atlas-azure` and `atlas-aws` produce reference architecture packs with official-icon SVGs and branded PDFs. | Shipping — 11 skills |
+| **Branding** | One shared verbal, visual, accessibility, physical, and motion system applied across product UI, documents, print, environmental work, and video. Six theme skills use open-source fonts and accessible light and dark roles; `press` renders approved documents, and `exhibit` builds interactive explanations. | Shipping — 9 skills |
 | **Writing** | The writing sequence, explore then structure then render: `freewrite` mines raw material with judgment held off, `outline` orders it into beats and grounds every term before a beat leans on it, and `draft` renders prose one beat at a time against an auditable coverage map — 3 skills. | Shipping |
 | **Productivity** | Delightful automations: the personal and team workflows worth never doing by hand again. `brief` places agent rules, `handoff` carries a run forward, `questionnaire` reaches the person who can decide, `wait-what` repairs a failed explanation, `teach` carries a concept across sessions, and `spotlight` turns established context into the smallest source-grounded visual — 6 skills. | Shipping |
 
@@ -129,6 +129,11 @@ Doctrine every other group may reference, and which references no group in retur
 | [glossary](skills/developer/glossary/SKILL.md) | model | Build and sharpen the project's shared language, with an explicit avoid list per term |
 | [triage](skills/developer/triage/SKILL.md) | user | Move issues and external pull requests through a state machine of triage roles, ending in an agent-ready brief |
 | [wizard](skills/developer/wizard/SKILL.md) | model | Generate a resumable shell wizard for the steps only a human can perform |
+| [atlas](skills/developer/atlas/SKILL.md) | user | Document an explicitly selected Azure, AWS, or GCP architecture with evidence labels, provider-native boundaries, official-icon diagrams, and an HTML and PDF review pack; requires `press` |
+
+Every Atlas run begins by asking, “Which cloud platform should this architecture target: Azure, AWS, or GCP?” The run waits for the answer and never infers the platform from the invoked skill name or repository. If the user named a platform earlier, the run asks for explicit confirmation before continuing. Atlas authors and reviews documentation; it does not deploy or provision cloud resources.
+
+**Atlas migration:** Replace `/atlas-azure`, `/atlas-aws`, and `/atlas-gcp` with `/atlas`, or name `atlas` in a plain request. These are retired invocations, not CLI aliases. Reinstall the catalog and its required `press` dependency using the installation instructions above. Inspect every project, personal, and workspace skill location used by your tools. Remove only obsolete installed copies or links for `atlas-azure`, `atlas-aws`, and `atlas-gcp`, including tool-prefixed copies, after preserving local edits. Reinstallation may leave stale entries; confirm that your tool lists one `atlas` and no retired Atlas skills. Restart or refresh the tool's skill catalog if needed. The [Atlas documentation](https://tqnonline.github.io/skills/atlas/) links the Azure, AWS, and GCP provider guides.
 
 ### PM — the AI-native transformation practice
 
@@ -164,8 +169,6 @@ Doctrine every other group may reference, and which references no group in retur
 | [press](skills/branding/press/SKILL.md) | user | Render an approved markdown document to a branded HTML page and PDF |
 | [branding-system](skills/branding/branding-system/SKILL.md) | model | Apply the shared verbal, surface, accessibility, provenance, motion, and verification contract |
 | [exhibit](skills/branding/exhibit/SKILL.md) | user | Build an interactive, branded HTML page that walks a reader through a topic as a journey |
-| [atlas-azure](skills/branding/atlas-azure/SKILL.md) | user | Turn a repository or plan into an evidence-grounded Azure architecture pack with numbered SVG diagrams and a branded PDF |
-| [atlas-aws](skills/branding/atlas-aws/SKILL.md) | user | Build an AWS-native architecture pack with account and network boundaries, official 96-pixel icons, numbered SVGs, a PDF, and independent audience review |
 
 ### Productivity
 

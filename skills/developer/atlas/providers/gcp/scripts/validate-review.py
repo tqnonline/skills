@@ -208,10 +208,14 @@ def validate(root_arg: str, review_arg: str) -> dict[str, Any]:
 
     verdict = receipt.get("verdict")
     require(verdict in {"pass", "revise", "blocked"}, "verdict must be pass, revise, or blocked")
+    regressions = array(receipt.get("regressionFindings"), "regressionFindings")
+    for regression in regressions:
+        text(regression, "regressionFindings[]")
     limitations = receipt.get("limitations")
     require(isinstance(limitations, list), "limitations must be an array")
     if verdict == "pass":
-        require(all(score >= 3 for raw in personas for score in obj(raw, "persona")["scores"].values()), "pass is unsupported when a persona score is below 3")
+        require(all(score >= 4 for raw in personas for score in obj(raw, "persona")["scores"].values()), "pass is unsupported when a persona score is below 4")
+        require(not regressions, "pass is unsupported with regression findings, including minor regressions")
         require(all(status == "met" for status in check_statuses.values()), "pass is unsupported unless every requirement check is met")
         require(not any(obj(item, "finding").get("severity") in {"major", "critical"} for item in findings), "pass is unsupported with major or critical findings")
 

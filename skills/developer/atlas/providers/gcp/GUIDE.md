@@ -1,30 +1,17 @@
----
-name: atlas-gcp
-description: Builds evidence-grounded Google Cloud reference architectures from repositories or requirements, with official-icon SVG diagrams, HTML, PDF, and independent quality judgment. User-invoked. Use when asked to document a GCP architecture or produce an architecture review pack.
-requires: press
----
-
-# Atlas GCP (user-invoked)
+# GCP provider guide
 
 Turn evidence into an explainable Google Cloud architecture pack, not a renamed Azure diagram.
 
-## Contract
-
-```yaml
-contract:
-  invocation: user
-  thesis: evidence
-  verbs: [read, write-repo]
-  scope: guest
-  trace: none
-```
-
-## When to invoke
+## When to load
 
 - The user requests a Google Cloud reference architecture from code or requirements.
 - A GCP architecture needs official-icon diagrams, a review PDF, or a cumulative quality evaluation.
 
 ## Procedure
+
+Load only after Atlas has obtained explicit GCP confirmation. Resolve all paths in this guide and sibling references relative to this provider directory. References to the installed directory mean this directory, not the Atlas root. This guide is not a separately invoked skill.
+
+This workflow only authors and reviews architecture documentation. Do not deploy or provision resources on Azure, AWS, or GCP. Describe proposed runtime tests without executing them or claiming they passed.
 
 1. Read `METHOD.md`. Record input revision, repository/plan/mixed mode, audience, current versus target state, output profile and directory. Inspect repository instructions. Never run unfamiliar code to discover its architecture.
 2. Read `GCP-FOUNDATIONS.md` and `GCP-SEMANTICS.md` on every run. Assess all eight foundation areas, distinguish ownership from network attachment, and trace critical workload paths. Read `AGENTS-AND-SAAS.md` when agents or commercial SaaS appear.
@@ -49,4 +36,4 @@ contract:
 
 ## Output contract
 
-`OUTPUT.md` defines files and the canonical model. `REVIEW.md` defines independent judgment. `review-ready` means ready for human architecture review, not deployment approval. This draft is not promoted into the catalog until its packaging and evaluation evidence support that decision. Scripts must work from the installed directory without another Atlas skill or cloud credentials.
+`OUTPUT.md` defines files and the canonical model. `REVIEW.md` defines independent judgment. `review-ready` means ready for human architecture review, not deployment approval. Catalog promotion does not establish a passing live architecture evaluation. Scripts must work from the installed directory without another Atlas skill or cloud credentials.

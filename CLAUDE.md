@@ -9,11 +9,19 @@ Machine-checkable rules for humans and agents working in `tqnonline/skills`.
 - Every promoted skill appears in root `README.md` and `.claude-plugin/plugin.json`.
 - Drafts appear in neither README nor plugin manifest.
 
-## Group independence (ADR 0007)
+## Group independence (ADRs 0007 and 0011)
 
 - Each group is independently installable. Any group may reference `core`; no group may reference any other group; `core` references no group.
+- One explicit exception applies only to `skills/developer/atlas`: it may use branding `press`, and it may use a branding theme or `branding-system` when the user selects it. This permission does not apply to other developer skills or other branding capabilities.
 - Skill directory basenames are unique repository-wide — installation targets are one flat namespace in every supported tool.
 - Enforced by `test/structure/group-independence.test.mjs`: basename uniqueness, install-set integrity, and no cross-group path references.
+
+## Atlas platform selection (ADR 0011)
+
+- Every Atlas run must ask exactly: “Which cloud platform should this architecture target: Azure, AWS, or GCP?”
+- The run must wait for the answer. It must never infer the platform from the invoked skill name, repository contents, or other context.
+- If the user named a platform earlier, the run must ask the user to confirm it explicitly before continuing.
+- Atlas is one promoted developer skill. Azure, AWS, and GCP are internal provider profiles with equal support status, not separately discoverable skills.
 
 ## Skill contract
 

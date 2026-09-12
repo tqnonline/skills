@@ -1,6 +1,6 @@
 # The Quentin Skills
 
-> The Quentin's skill library: 59 skills across six groups, documenting what each one does, who it is for, and how to call it, on top of one doctrine — human judgment holds the gates, trusted agents do the work in between.
+> The Quentin's skill library: 60 promoted skills across six groups, including 23 developer skills, documenting what each one does, who it is for, and how to call it, on top of one doctrine — human judgment holds the gates, trusted agents do the work in between.
 
 ## Home
 
@@ -56,6 +56,7 @@
 - [glossary](https://tqnonline.github.io/skills/glossary/): Build the project's shared language, each term with an explicit avoid list.
 - [triage](https://tqnonline.github.io/skills/triage/): Move issues through triage roles, one state at a time, ending in an agent-ready brief.
 - [wizard](https://tqnonline.github.io/skills/wizard/): Generate a resumable shell wizard for the steps only a human can perform.
+- [atlas](https://tqnonline.github.io/skills/atlas/): One user-invoked architecture-documentation skill for Azure, AWS, or GCP; requires press for HTML and PDF review packs. Every run asks exactly "Which cloud platform should this architecture target: Azure, AWS, or GCP?" and waits, even if a platform was named earlier. It never infers the target and never deploys. The Atlas page links internal provider guidance and migration instructions for retired invocations.
 
 ### PM
 
@@ -87,8 +88,6 @@
 - [press](https://tqnonline.github.io/skills/press/): Renders an approved markdown document to a branded, self-contained HTML page and a PDF.
 - [branding-system](https://tqnonline.github.io/skills/branding-system/): Common engine for applying a validated theme profile as one coherent verbal, visual, accessibility, physical, and motion system.
 - [exhibit](https://tqnonline.github.io/skills/exhibit/): Builds one self-contained, interactive HTML page that walks a reader through a topic as a journey, in a selected theme's colors, type, and motion.
-- [atlas-azure](https://tqnonline.github.io/skills/atlas-azure/): Builds an evidence-grounded Azure reference architecture from a repository or plan, with numbered official-icon SVG diagrams and a branded PDF.
-- [atlas-aws](https://tqnonline.github.io/skills/atlas-aws/): Builds an evidence-grounded AWS reference architecture from a repository or plan, with official-icon SVG diagrams and a branded HTML and PDF review pack.
 
 ### Writing
 

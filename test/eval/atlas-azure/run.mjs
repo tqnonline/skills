@@ -10,8 +10,8 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '../../..');
-const SKILL = join(ROOT, 'skills/branding/atlas-azure');
-const ASSEMBLE = join(SKILL, 'scripts/assemble.py');
+const SKILL = join(ROOT, 'skills/developer/atlas');
+const ASSEMBLE = join(SKILL, 'providers/azure/scripts/assemble.py');
 const PERSONAS = ['junior-developer', 'cto', 'enterprise-architect', 'security-architect'];
 const DIMENSIONS = ['clarity', 'complexity', 'understandability'];
 const REQUIRED = ['architecture.json', 'reference-architecture.md', 'reference-architecture.html', 'reference-architecture.pdf', 'verification.md'];
@@ -122,7 +122,7 @@ if (o.command === 'init') {
     const priorPaths = cumulative.slice(0, -1).map(s => `- ${join(stageDir(o.run, s.id), 'frozen')}`).join('\n') || '- None';
     const input = [`# Atlas Azure evaluation stage ${id}: ${cases.stages[id - 1].title}`, '', '## Baseline', cases.baseline, '', '## Cumulative requirements', ...cumulative.flatMap(s => [`### Stage ${s.id}: ${s.title}`, s.requirements, '', ...s.acceptance.map((a, i) => `- S${s.id}-A${i + 1}: ${a}`), '']), '## Available frozen preceding outputs', priorPaths, ''].join('\n');
     writeFileSync(join(dir, 'input.md'), input);
-    writeFileSync(join(dir, 'author-prompt.md'), `Produce the Atlas Azure architecture pack for stage ${id}. Read only input.md and the frozen preceding outputs listed there. Do not inspect the run fixtures because they contain future stages. Write artifacts to a separate output directory for the orchestrator to freeze.\n`);
+    writeFileSync(join(dir, 'author-prompt.md'), `Invoke Atlas (atlas) to produce the architecture pack for stage ${id}. Ask "Which cloud platform should this architecture target: Azure, AWS, or GCP?" and wait for explicit Azure confirmation before loading its provider profile. Read only input.md and the frozen preceding outputs listed there as task evidence. Do not inspect the run fixtures because they contain future stages. Write artifacts to a separate output directory for the orchestrator to freeze.\n`);
     m.stages[id] = { revealed: true, revealedAt: new Date().toISOString(), inputHash: sha(join(dir, 'input.md')) }; save(loaded.file, m);
     console.log(join(dir, 'author-prompt.md'));
   } else if (o.command === 'freeze') {
@@ -189,7 +189,7 @@ if (o.command === 'init') {
     if (!['pass', 'revise', 'blocked'].includes(j.verdict)) errors.push('verdict is invalid');
     if (errors.length) die(errors.join('; '));
     const findings = j.personas.flatMap(p => p.findings);
-    const passEligible = j.personas.every(p => DIMENSIONS.every(d => p.scores[d] >= 3)) && !findings.some(f => ['critical', 'major'].includes(f.severity)) && j.requirementChecks.every(c => c.status === 'met') && j.regressionFindings.length === 0;
+    const passEligible = j.personas.every(p => DIMENSIONS.every(d => p.scores[d] >= 4)) && !findings.some(f => ['critical', 'major'].includes(f.severity)) && j.requirementChecks.every(c => c.status === 'met') && j.regressionFindings.length === 0;
     j.derived = { passEligible, modelVerdictAgrees: (j.verdict === 'pass') === passEligible };
     const destination = join(stageDir(o.run, id), 'judgment.json'); if (existsSync(destination)) die(`stage ${id} already has a judgment`);
     save(destination, j); state.judgment = true; state.judgmentHash = sha(destination); state.passEligible = passEligible; state.verdict = j.verdict; save(loaded.file, m);

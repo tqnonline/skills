@@ -1,30 +1,17 @@
----
-name: atlas-aws
-description: "Builds an evidence-grounded AWS reference architecture from a repository or plan, with official-icon SVG diagrams and a branded HTML/PDF review pack. User-invoked. Use when asked to document an AWS architecture or turn a design plan into an architecture review pack."
-requires: press
----
-
-# Atlas AWS (user-invoked)
+# AWS provider guide
 
 Turn code or a scoped plan into an explainable AWS architecture pack.
 
-## Contract
-
-```yaml
-contract:
-  invocation: user
-  thesis: evidence
-  verbs: [read, write-repo]
-  scope: guest
-  trace: none
-```
-
-## When to invoke
+## When to load
 
 - The user requests an AWS architecture pack from a repository or scoped plan.
 - An existing AWS design needs evidence, numbered diagrams, or an independently reviewed PDF.
 
 ## Procedure
+
+Load only after Atlas has obtained explicit AWS confirmation. Resolve all paths in this guide and sibling references relative to this provider directory. References to the installed directory mean this directory, not the Atlas root. This guide is not a separately invoked skill.
+
+This workflow only authors and reviews architecture documentation. Do not deploy or provision resources on Azure, AWS, or GCP. Describe proposed runtime tests without executing them or claiming they passed.
 
 1. Read `METHOD.md` and `LANDING-ZONES.md`. Record the input path and revision, current versus target state, audience, output directory, and brand. Never execute an unfamiliar repository merely to document it.
 2. Gather evidence with host search and source-reading tools. Assess all eight platform areas and trace workload, denied/degraded, recovery, deployment, and telemetry paths. Research current AWS facts from primary sources. Unknown infrastructure remains unknown.

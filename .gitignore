@@ -12,6 +12,10 @@ site/_data/
 site/_site/
 site/.jekyll-cache/
 .amp/portals/*
+# Local Atlas evaluation kits, frozen runs, and review artifacts stay out of Git.
+.amp/atlas-*/
+.amp/in/
+.amp/tmp/
 # exhibit's render pass writes captures and a contact sheet beside the page
 *.captures/
 *.sheet.png

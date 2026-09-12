@@ -6,7 +6,7 @@ import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import test from 'node:test';
 
-const validator = resolve('drafts/branding/atlas-gcp/scripts/validate-review.py');
+const validator = resolve('skills/developer/atlas/providers/gcp/scripts/validate-review.py');
 const generic = ['placement', 'directed-flows', 'truthful-abstraction', 'icon-readability', 'cumulative-consistency'];
 const personaIds = ['junior-developer', 'cto', 'enterprise-architect', 'security-architect'];
 
@@ -50,8 +50,9 @@ function fixture(pages = 2) {
   const receipt = {
     mode: 'architecture-pack', scope: 'ordinary pack', independent: true,
     reviewer: 'independent-review-context', inputRevision: 'abc123', artifactHashes, inspected,
-    personas: personaIds.map(id => ({ id, scores: { clarity: 3, complexity: 4, understandability: 5 }, evidence: ['artifact evidence'], strengths: ['traceable flow'] })),
+    personas: personaIds.map(id => ({ id, scores: { clarity: 4, complexity: 4, understandability: 4 }, evidence: ['artifact evidence'], strengths: ['traceable flow'] })),
     findings: [],
+    regressionFindings: [],
     requirementChecks: ['S1-A1', ...generic].map(id => ({ id, status: 'met', evidence: 'checked in artifacts' })),
     verdict: 'pass', limitations: [],
   };
@@ -143,4 +144,40 @@ test('rejects traversal, symlink, and self-hash paths', () => {
 test('rejects unsupported pass conditions and skill-patch mode', () => {
   rejects(receipt => { receipt.personas[0].scores.clarity = 2; }, /pass is unsupported/);
   rejects(receipt => { receipt.mode = 'skill-patch'; }, /skill-patch cannot produce architecture review-ready/);
+});
+
+test('strict4 rejects one score of 3 among eleven 4s', () => rejects(receipt => {
+  receipt.personas[3].scores.understandability = 3;
+}, /pass is unsupported.*below 4/));
+
+test('strict4 rejects even a minor regression with all scores at 4', () => rejects(receipt => {
+  receipt.regressionFindings.push('Minor: a previously defined acronym lost its expansion.');
+}, /pass is unsupported.*regression/));
+
+for (const [name, mutate] of [
+  ['missing', receipt => { delete receipt.regressionFindings; }],
+  ['non-array', receipt => { receipt.regressionFindings = 'none'; }],
+  ['non-string entry', receipt => { receipt.regressionFindings = [3]; }],
+  ['empty entry', receipt => { receipt.regressionFindings = [' ']; }],
+]) test(`requires regressionFindings string array: ${name}`, () => rejects(receipt => {
+  receipt.verdict = 'revise';
+  mutate(receipt);
+}, /regressionFindings/));
+
+test('strict4 preserves a valid revise receipt with low scores and a minor regression', () => {
+  const { root, receipt } = fixture();
+  try {
+    receipt.verdict = 'revise';
+    receipt.personas[0].scores.clarity = 3;
+    receipt.regressionFindings.push('Minor: lost label.');
+    update(root, receipt);
+    const before = readFileSync(join(root, 'quality-review.json'), 'utf8');
+    const result = run(root);
+    assert.equal(result.status, 0, result.stderr);
+    const { derived, ...preserved } = JSON.parse(result.stdout);
+    assert.equal(derived.passEligible, false);
+    assert.equal(derived.finalStatus, 'needs-decision');
+    assert.deepEqual(preserved, receipt);
+    assert.equal(readFileSync(join(root, 'quality-review.json'), 'utf8'), before);
+  } finally { rmSync(root, { recursive: true, force: true }); }
 });
